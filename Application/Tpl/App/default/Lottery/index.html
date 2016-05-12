@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>活动中心</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="__PUBLIC__/App/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/App/css/jquery.nouislider.css"/>
+    <style>
+        .parent {
+            width: 390px;
+            height: 390px;
+            background: url("__PUBLIC__/App/images/disk.jpg") no-repeat center;
+            background-size: 100% 100%;
+            border: 1px red;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 80px;
+        }
+
+        .middle {
+            width: 100%;
+            height: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .lottery_cont {
+            width: 100%;text-align: center;margin-top: 30px;font-size: x-large;
+        }
+
+        body {
+            background-image: url("__PUBLIC__/App/images/bg1.png")
+        }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+
+<div class="middle">
+    <div class="parent">
+        <div class="disk">
+            <img src="__PUBLIC__/App/images/start.png" id="start">
+        </div>
+    </div>
+    <div class="lottery_cont">
+        <div>你有<label style="color:red">5</label>次抽奖机会</div>
+        <div class="show_lotter"></div>
+    </div>
+</div>
+</body>
+</html>
+<script src="__PUBLIC__/App/js/jquery-1.10.2.min.js"></script>
+
+<script src="__PUBLIC__/App/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/App/js/jquery.nouislider.min.js"></script>
+<script src="__PUBLIC__/App/js/jquery.easing.min.js"></script>
+<script src="__PUBLIC__/App/js/jQueryRotate.2.2.js"></script>
+<script type="text/javascript">
+    $(function () {
+        rotate();
+        $("#select").bind('change', function () {
+            //alert('aa');
+        });
+        $("input").attr("readonly", true);
+
+        $("#go").bind('click', function () {
+            alert($("#myform").serialize());
+        })
+    })
+
+    function getPrize() {
+        var result = null;
+        //var option=$("#myform").serialize();
+        $.ajax({
+            url: "http://www.we.com/index.php?g=App&m=Lottery&a=getLottery",
+            type: "GET",
+            //data:option,
+            dataType: "json",
+            cache: false,
+            async: false,
+            error: function () {
+                alert('出错了');
+                return false;
+            },
+            success: function (data) {
+                result = data;
+            }
+        });
+        return result;
+
+    }
+
+    function rotateOne() {
+        rotate();
+    }
+
+
+    function rotate() {
+        $("#start").css("cursor", "pointer");
+        $("#start").rotate({
+            bind: {
+                click: function () {
+                    //绑定点击事件
+                    $(this).unbind('click').css("cursor", "default");
+                    var value = getPrize();
+                    //console.log(value);
+                    //alert(value.chong_10);
+                    //return false;
+                    var effect = $.easing.swing;
+                    //alert(eval(effect));
+                    //alert($.easing.effect);
+                    $(this).rotate({
+                        duration: value.duration,//多少毫秒内完成转动
+                        angle: 0,//起始角度
+                        animateTo: value.n * 360 + value.angle,//一共转动多少角度
+                        easing: eval(effect),//转动动画扩展
+                        callback: function () {
+                            //结束时的回调函数
+                            $(".show_lotter").html("恭喜您抽中了 "+value.message)
+                        }
+                    })
+                }
+            }
+        })
+    }
+
+
+</script>

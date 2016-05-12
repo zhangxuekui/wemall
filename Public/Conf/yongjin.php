@@ -1,0 +1,1 @@
+<?php $yongjin = '{"yongjin_1":5,"yongjin_2":3,"yongjin_3":2}';?>
