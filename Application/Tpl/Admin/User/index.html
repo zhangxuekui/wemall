@@ -16,7 +16,7 @@
 														type="checkbox" class="ace"> <span class="lbl"></span>
 												</label></th>
 												<th>ID</th>
-												<th>微信昵称</th>
+												<th>微信昵称(点击昵称查看浏览信息)</th>
 												<th>微信头像</th>
 												<th>用户名</th>
 												<th>邮箱</th>
@@ -36,8 +36,8 @@
 												<td>{$result.id}</td>
 												<php>
 												$wx_info = json_decode($result['wx_info'],true);
-												
-												echo "<td>$wx_info[nickname]</td>";
+
+												echo "<td><a href='".U('User/statistics',array('uid'=>$result['id']))."'>$wx_info[nickname]</a> </td>";
 												$img = !empty($wx_info['headimgurl'])?$wx_info['headimgurl']:'./Application/Tpl/App/default/Public/Static/images/defult.jpg';
 												echo "<td><img src='".$img."' width='40px;' height='40px;'></td>";
 												</php>
