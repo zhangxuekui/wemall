@@ -396,9 +396,10 @@ class IndexAction extends Action {
 
 			$menuresult = R ( "Api/Api/getmenu" );
 			$this->assign ( "menu", $menuresult );
-			
 
-			$goodsresult = M('Good')->where(array('recommend'=>'2'));
+			$recommend = M('Good')->where(array('recommend'=>'1'))->select();
+			$goodsresult = M('Good')->where(array('recommend'=>'2'))->select();
+
 			$uid = $_GET ["uid"];
 			$usersresult = R ( "Api/Api/getuser", array (
 					$uid 
@@ -433,10 +434,15 @@ class IndexAction extends Action {
 				}
 			}
 
+			$this->assign('recommend',$recommend);
 			$this->assign ( "goods", $goodsresult );
 			
 			$this->assign ( "users", $usersresult );
-			
+
+			//增加浏览统计
+
+
+
 			$buy_cnt = $this->get_day_buy();
 			$this->assign ( "buy_cnt", $buy_cnt );
 			include dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/Public/Conf/button_config.php'; 

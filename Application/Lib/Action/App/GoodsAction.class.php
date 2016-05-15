@@ -48,32 +48,39 @@ class GoodsAction extends Action
         $this->init();
         $info = R("Api/Api/gettheme");
         C("DEFAULT_THEME", $info ["theme"]);
-        $goodsresult = M('good')->where(array('id' => $_GET['goods_id']))->find();
-        $uid = $_GET ["uid"];
-        $usersresult = R("Api/Api/getuser", array(
-            $uid
-        ));
-        if (empty($usersresult)) {
-            $usersresult = M("user")->where(array("uid" => $_GET['uid']))->find();
-        }
-        //查询是否第一次购买
-        $zhekou = 0;
-        if (file_exists('./Public/Conf/zhekou.php')) {
-            require './Public/Conf/zhekou.php';
-        }
+        $goods_id = $this->_param('goods_id');
+        $goodsresult = M('good')->where(array('id' => $goods_id))->find();
+        if ($goods_id && $goodsresult) {
 
-        if ($zhekou > 0) {
-            $order = $result = M("Order")->where(array(
-                "user_id" => $usersresult["id"],
-                "pay_status" => 1
-            ))->find();
-            if (!empty($order)) {
-                foreach ($goodsresult as $key => $info) {
-                    $goodsresult[$key]['price'] = $info['price'] * ($zhekou / 100);
+            $uid = $_GET ["uid"];
+            $usersresult = R("Api/Api/getuser", array(
+                $uid
+            ));
+            if (empty($usersresult)) {
+                $usersresult = M("user")->where(array("uid" => $_GET['uid']))->find();
+            }
+            //查询是否第一次购买
+            $zhekou = 0;
+            if (file_exists('./Public/Conf/zhekou.php')) {
+                require './Public/Conf/zhekou.php';
+            }
+
+            if ($zhekou > 0) {
+                $order = $result = M("Order")->where(array(
+                    "user_id" => $usersresult["id"],
+                    "pay_status" => 1
+                ))->find();
+                if (!empty($order)) {
+                    foreach ($goodsresult as $key => $info) {
+                        $goodsresult[$key]['price'] = $info['price'] * ($zhekou / 100);
+                    }
                 }
             }
+            M('statistics')->add(array('goods_id' =>$goods_id,'uid'=>$uid,'view_time'=>time()));
+            $this->assign("goods", $goodsresult);
+            $this->display();
+        } else {
+            echo '商品参数有误';
         }
-        $this->assign("goods", $goodsresult);
-        $this->display();
     }
 }

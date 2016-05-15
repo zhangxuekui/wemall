@@ -58,7 +58,7 @@
                                                 <td>{$result.name}</td>
                                                 <td>{$result.menu}</td>
                                                 <td>{$result.price}</td>
-                                                <td>{$result.recommend}</td>
+                                                <td><if condition="$result.recommend eq 1">主页推荐位置<elseif condition="$result.recommend eq 2"/>主页位置<else />未推荐</if></td>
                                                 <td>{$result.time}</td>
                                                 <td>{$result.viewcount}</td>
                                                 <td><a href="javascript:void(0);" onclick="reGood(this);"
@@ -314,7 +314,7 @@
                     $('input[name="addname"]').val(json.name);
                     $('input[name="addprice"]').val(json.price);
                     $('input[name="add_old_price"]').val(json.old_price);
-                    $('input[name="recommend"]').val(json.recommend);
+                    $('select[name="recommend"]').val(json.recommend);
                     $('input[name="addsort"]').val(json.sort);
                     $('select[name="addstatus"]').val(json.status);
                     $('#myEditor').html(json.detail);

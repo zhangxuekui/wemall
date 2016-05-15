@@ -134,50 +134,39 @@
             </div>
             <div class="row tuijians">
                 <h3 class="tuijiantitle">推荐商品</h3>
-                <div class="shangpin">
-                    <img src="__PUBLIC__/img/shangpin1.png" class="shangpinimg pull-left" alt="">
-                    <div class="shangpininfo">
-                        <h4>张君雅小妹妹 碳烤鸡汁面点心</h4>
-                        <p class="leixin">内部卷: <span class="jg">¥</span><span class="price">15.99</span></p>
-                        <p class="info">优惠卷剩余<span class="baseColor num">4800</span>张,已领取<span class="num">5999</span>张
-                        </p>
-                        <div class="price2 text-center">卷后价:<span class="big"> <span class="jg">¥</span>9.99</span>
+                <volist name="recommend" id="recgoods">
+                    <div class="shangpin">
+                        <a href="{:U('app/Goods/goodsdetails','goods_id='.$recgoods['id'])}"><img src="__PUBLIC__/Uploads/{$recgoods.image}" class="shangpinimg pull-left" alt=""></a>
+                        <div class="shangpininfo">
+                            <h4>{$recgoods.name}</h4>
+                            <p class="leixin">内部卷: <span class="jg">¥</span><span class="price">15.99</span></p>
+                            <p class="info">优惠卷剩余<span class="baseColor num">4800</span>张,已领取<span
+                                    class="num">5999</span>张
+                            </p>
+                            <div class="price2 text-center">卷后价:<span class="big"> <span class="jg">¥</span>9.99</span>
+                            </div>
+                            <div class="price3 text-center">在售价: <span class="jg">¥{$recgoods.price}</span></div>
+                            <p class="gmlc clearfix">
+                                购买流程 >
+                                <a href=""><span class="btn1">领卷</span></a>
+                                <a href="" class="pull-right"><span class="btn2">购买</span></a>
+                            </p>
                         </div>
-                        <div class="price3 text-center">在售价: <span class="jg">¥22</span></div>
-                        <p class="gmlc clearfix">
-                            购买流程 >
-                            <a href=""><span class="btn1">领卷</span></a>
-                            <a href="" class="pull-right"><span class="btn2">购买</span></a>
-                        </p>
                     </div>
-                </div>
-                <div class="shangpin">
-                    <img src="__PUBLIC__/img/shangpin1.png" class="shangpinimg pull-left" alt="">
-                    <div class="shangpininfo">
-                        <h4>张君雅小妹妹 碳烤鸡汁面点心</h4>
-                        <p class="leixin">内部卷: <span class="jg">¥</span><span class="price">15.99</span></p>
-                        <p class="info">优惠卷剩余<span class="baseColor num">4800</span>张,已领取<span class="num">5999</span>张
-                        </p>
-                        <div class="price2 text-center">卷后价:<span class="big"> <span class="jg">¥</span>9.99</span>
-                        </div>
-                        <div class="price3 text-center">在售价: <span class="jg">¥22</span></div>
-                        <p class="gmlc clearfix">
-                            购买流程 >
-                            <a href=""><span class="btn1">领卷</span></a>
-                            <a href="" class="pull-right"><span class="btn2">购买</span></a>
-                        </p>
-                    </div>
-                </div>
+                </volist>
             </div>
             <div class="row shangpinliebiao1">
                 <volist name="goods" id="goodsvo">
                     <div class="col-xs-6">
                         <div class="shangpinjianjie">
                             <div class="jianjieimg">
-                                <a href="{:U('app/goods/goodsdetails','goods_id='.$goodsvo['id'])}" ><img src="__PUBLIC__/Uploads/{$goodsvo.image}" class="center-block" alt=""></a>
+                                <a href="{:U('app/Goods/goodsdetails','goods_id='.$goodsvo['id'])}">
+                                    <img src="__PUBLIC__/Uploads/{$goodsvo.image}" class="center-block" alt="">
+                                </a>
                             </div>
                             <div class="jianjieinfo">
-                                <a href="{:U('app/goods/goodsdetails','goods_id='.$goodsvo['id'])}" ><h3>{$goodsvo.name}</h3></a>
+                                <a href="{:U('app/goods/goodsdetails','goods_id='.$goodsvo['id'])}"><h3>
+                                    {$goodsvo.name}</h3></a>
                                 <p><span class="jianjieleixin">3包装</span> <span class="pull-right jianjieprice"><span
                                         class="small">¥</span>{$goodsvo.price}</span></p>
                             </div>
