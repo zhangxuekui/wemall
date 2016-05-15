@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1">
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <meta name="msapplication-TileImage" content="assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#0e90d2">
+    <!-- <link rel="icon" sizes="192x192" href="assets/i/app-icon72x72@2x.png">
+    -->
+    <!-- <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+    -->
+    <!-- <link rel="icon" type="image/png" href="assets/i/favicon.png">
+    -->
+    <link rel="stylesheet" href="__PUBLIC__/css/normalize.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.offcanvas.min.css">
+
+    <link rel="stylesheet" href="__PUBLIC__/css/font-awesome/font-awesome.css" type="text/css" charset="utf-8">
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+    <title>商品详情</title>
+</head>
+<body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">您正在使用一个 <strong>老旧的</strong> 浏览器. 为了您能获取更好的互联网体验，请 <a href="http://browsehappy.com.cn/" target="_blank">升级</a> 您的浏览器.</p>
+            <![endif]-->
+
+    <!-- =========================================== mycode =====================================- -->
+<div class="container-fluid">
+    <div class="row clearfix center-block maxw">
+        <div class="col-md-12 column nopadding">
+            <div class="goodsdetails">
+                <div class="goodsimg">
+                    <img src="__PUBLIC__/Uploads/{$goods.image}" class="center-block" alt="">
+                </div>
+                <h3 class="goodstitle">{$goods.name}<span class="small">（ 礼包装 ）</span></h3>
+                <p class="goodsprice">¥<span class="big">{$goods.price}</span></p>
+            </div>
+            <div class="goodsintroduce">
+                <h3 class="introduce">商品介绍</h3>
+                {$goods.detail}
+            </div>
+            <div class="qrs clearfix">
+                <div class="w50 pull-left">
+                    <div class="qr">
+                        <h3 class="text-center">优惠卷二维码</h3>
+                        <img src="__PUBLIC__/img/qr.png" class="center-block img-responsive" alt="">
+                        <p class="baseColor text-center">长按可领取优惠卷</p>
+                    </div>
+                </div>
+                <div class="w50 pull-left">
+                    <div class="qr">
+                        <h3 class="text-center">优惠卷二维码</h3>
+                        <img src="__PUBLIC__/img/qr.png" class="center-block img-responsive" alt="">
+                        <p class="baseColor text-center">长按可领取优惠卷</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+                <div class="navbar-bottom-my row center-block maxw">
+                    <div class="col-xs-3 nopadding active">
+                        <a href="index.html" class="text-center">
+                            <img src="__PUBLIC__/img/menu1.png" class="center-block img1" alt="">
+                            <img src="__PUBLIC__/img/menua1.png" class="center-block img2" alt="">
+                            首页
+                        </a>
+                    </div>
+                    <div class="col-xs-3 nopadding">
+                        <a href="fenlei.html" class="text-center">
+                            <img src="__PUBLIC__/img/menu2.png" class="center-block img1" alt="">
+                            <img src="__PUBLIC__/img/menua2.png" class="center-block img2" alt="">
+                            分类
+                        </a>
+                    </div>
+                    <div class="col-xs-3 nopadding">
+                        <a href="choujiang.html" class="text-center">
+                            <img src="__PUBLIC__/img/menu3.png" class="center-block img1" alt="">
+                            <img src="__PUBLIC__/img/menua3.png" class="center-block img2" alt="">
+                            活动中心
+                        </a>
+                    </div>
+                    <div class="col-xs-3 nopadding">
+                        <a href="mine.html" class="text-center">
+                            <img src="__PUBLIC__/img/menu4.png" class="center-block img1" alt="">
+                            <img src="__PUBLIC__/img/menua4.png" class="center-block img2" alt="">
+                            我的
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- ============================================ end =======================================- -->
+
+
+
+<!--[if (gte IE 9)|!(IE)]>
+<!-->
+<!--<![endif]-->
+<!--[if lte IE 8 ]>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+<script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+    <script src="__PUBLIC__/js/jquery-1.9.1.min.js" ></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.offcanvas.min.js"></script>
+    <script src="__PUBLIC__/js/jquery.cookie.js"></script>
+    <script>
+
+    </script>
+</body>
+</html>
