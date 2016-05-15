@@ -69,6 +69,7 @@ class GoodAction extends PublicAction {
 			$data ["menu_id"] = $_POST ["addmenuid"];
 			$data ["name"] = $_POST ["addname"];
 			$data ["price"] = $_POST ["addprice"];
+			$data ["recommend"] = $_POST ["recommend"];
 			$data ["old_price"] = $_POST ["add_old_price"];
 			$data ["sort"] = $_POST ["addsort"];
 			if ($_FILES ['addimage'] ['name'] !== '') {
@@ -78,7 +79,7 @@ class GoodAction extends PublicAction {
 			}
 			$data ["status"] = $_POST ["addstatus"];
 			if(!empty($_POST ["editorValue"]))$data ["detail"] = $_POST ["editorValue"];
-			
+
 			$result = R ( "Api/Api/addgood", array($data) );
 			$this->success ( "修改商品成功！" );
 		}else{
@@ -86,6 +87,7 @@ class GoodAction extends PublicAction {
 			$data ["name"] = $_POST ["addname"];
 			$data ["price"] = $_POST ["addprice"];
 			$data ["old_price"] = $_POST ["add_old_price"];
+			$data ["recommend"] = $_POST ["recommend"];
 			$data ["sort"] = $_POST ["addsort"];
 			if ($_FILES ['addimage'] ['name'] !== '') {
 				$img = $this->upload ();

@@ -393,13 +393,12 @@ class IndexAction extends Action {
 			$info = R ( "Api/Api/gettheme" );
 			C ( "DEFAULT_THEME", $info ["theme"] );
 			$this->assign ( "info", $info );
-			
+
 			$menuresult = R ( "Api/Api/getmenu" );
 			$this->assign ( "menu", $menuresult );
 			
-			$goodsresult = R ( "Api/Api/getgood" );
-			
-			
+
+			$goodsresult = M('Good')->where(array('recommend'=>'2'));
 			$uid = $_GET ["uid"];
 			$usersresult = R ( "Api/Api/getuser", array (
 					$uid 
@@ -433,7 +432,7 @@ class IndexAction extends Action {
 					}
 				}
 			}
-		
+
 			$this->assign ( "goods", $goodsresult );
 			
 			$this->assign ( "users", $usersresult );
