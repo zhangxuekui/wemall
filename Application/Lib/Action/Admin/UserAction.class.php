@@ -45,7 +45,7 @@ class UserAction extends PublicAction
         $result = array();
         $sql = 'select statistics.*,good.name,good.viewcount,good.price from ' . C('DB_PREFIX')
             . 'statistics statistics left join ' . C('DB_PREFIX')
-            . 'good good on statistics.goods_id=good.id where statistics.uid=' . $uid . ' and statistics.goods_id <> 0 limit ' . $Page->firstRow . ',' . $Page->listRows.' order by ';
+            . 'good good on statistics.goods_id=good.id where statistics.uid=' . $uid . ' and statistics.goods_id <> 0 order by statistics.view_time  limit ' . $Page->firstRow . ',' . $Page->listRows;
         $result = $m->query($sql);
 
 

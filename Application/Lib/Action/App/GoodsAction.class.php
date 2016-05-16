@@ -76,6 +76,7 @@ class GoodsAction extends Action
                     }
                 }
             }
+            M('good')->where('id=' .$goods_id)->setInc('viewcount',1);
             M('statistics')->add(array('goods_id' =>$goods_id,'uid'=>$uid,'view_time'=>time()));
             $this->assign("goods", $goodsresult);
             $this->display();
