@@ -433,7 +433,8 @@ class IndexAction extends Action {
 					}
 				}
 			}
-
+            $data['action_name'] = ACTION_NAME;
+            $this->assign('data',$data);
 			$this->assign('recommend',$recommend);
 			$this->assign ( "goods", $goodsresult );
 			

@@ -1,0 +1,106 @@
+<include file="Public:header"/>
+<!-- =========================================== mycode =====================================- -->
+<div class="container-fluid">
+    <div class="row clearfix center-block maxw">
+        <div class="col-md-12 column nopadding">
+            <div class="me">
+                <php>
+					$wx_info = json_decode($users['wx_info'],true);
+					$img = !empty($wx_info['headimgurl'])?$wx_info['headimgurl']:'../Public/Static/images/defult.jpg';
+					echo "<img src='".$img."' width='70px;' height='70px;' class='head'>";
+				</php>
+                <div class="myinfo">
+                    <h3 class="name"><php> echo $wx_info['nickname'];</php></h3>
+                    <p class="info">关注时间：<php>echo date('Y-m-d',$wx_info['subscribe_time']);</php></p>
+                    <p class="myqb"><img src="__PUBLIC__/img/qb.png" class="qb" alt="">我的钱包: <span class="money">200.00</span>元</p>
+                </div>
+                <a href="javascript:;;" id="signin" class="<if condition='$signin_status eq 1'>btnqd qded<else />btnqd</if>"><if condition='$signin_status eq 1'>已签到<else />签到</if></a>
+            </div>
+
+            <div class="minelinks">
+                <ul class="list-unstyled">
+                    <li><a href="{:U('app/Member/members')}">
+                        我的成员
+                        <span class="pull-right">
+                            <span class="num1">{$all_cnt}</span> <i class="fa fa-chevron-right"></i>
+                        </span>
+                    </a></li>
+                    <li><a href="">
+                        成员浏览量
+                        <span class="pull-right">
+                            <span class="num2">20次</span> <i class="fa fa-chevron-right"></i>
+                        </span>
+                    </a></li>
+                    <li><a href="">申请提现</a></li>
+                    <li><a href="">
+                        点击排行榜
+                        <span class="pull-right">
+                            <i class="fa fa-chevron-right"></i>
+                        </span>
+                    </a></li>
+                    <li><a href="">
+                        我的签到
+                        <span class="pull-right">
+                            <i class="fa fa-chevron-right"></i>
+                        </span>
+                    </a></li>
+                    <li><a href="">
+                        我的推广
+                        <span class="pull-right">
+                            <i class="fa fa-chevron-right"></i>
+                        </span>
+                    </a></li>
+                </ul>
+            </div>
+
+            <div class="from">
+                <p class="text-center">您是由 “{$l_name}”推荐</p>
+            </div>
+
+            <include file="Public:footermenu"/>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- ============================================ end =======================================- -->
+
+
+
+<!--[if (gte IE 9)|!(IE)]>
+    <!-->
+<!--<![endif]-->
+<!--[if lte IE 8 ]>
+    <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+    <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+<script src="__PUBLIC__/js/jquery-1.9.1.min.js" ></script>
+<script src="__PUBLIC__/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/js/bootstrap.offcanvas.min.js"></script>
+<script src="__PUBLIC__/js/jquery.cookie.js"></script>
+<script>
+ $(".btnqd").click(function() {
+     var href = '';
+     $.ajax({
+         url:'{:U('app/Member/signin')}',
+         dataType:'json',
+         success:function(msg){
+             if(msg.status == 1){
+                 $(".btnqd").addClass("qded");
+                 $(".btnqd").text("已签到");                         
+             }else{
+                 href = msg.msg;
+             }
+         }
+     })
+     if(href){
+         location.href=href;
+     }
+     return false;
+ })
+</script>
+    </body>
+</html>

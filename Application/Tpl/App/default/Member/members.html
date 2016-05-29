@@ -1,0 +1,76 @@
+<include file="Public:header"/>
+<!-- =========================================== mycode =====================================- -->
+<div class="container-fluid">
+    <div class="row clearfix center-block maxw">
+        <div class="membersbox members1 active">
+            <div class="memberstitle">
+                <h3>
+                    一代成员<span class="baseColor">(<span class="membernum">120人</span>)</span>
+                    <span class="pull-right"><a href="" class="memberbtn">收起</a></span>
+                </h3>
+            </div>
+            <div class="members clearfix row">
+                <a href="" class="center-block"><span class="member pull-left">
+                    <img src="__PUBLIC__/img/head1.png" class="img-circle center-block" alt="">
+                    <h4 class="text-center">随波</h4>
+                </span></a>
+            </div>
+        </div>
+
+        <div class="membersbox members2">
+            <div class="memberstitle">
+                <h3>
+                    二代成员<span class="baseColor">(<span class="membernum">88人</span>)</span>
+                    <span class="pull-right"><a href="" class="memberbtn">查看</a></span>
+                </h3>
+            </div>
+            <div class="members clearfix row">
+                <a href="" class="center-block"><span class="member pull-left">
+                    <img src="__PUBLIC__/img/head1.png" class="img-circle center-block" alt="">
+                    <h4 class="text-center">随波</h4>
+                </span></a>
+            </div>
+        </div>
+
+        <include file="Public:footermenu"/>
+    </div>
+</div>
+
+
+
+<!-- ============================================ end =======================================- -->
+
+
+
+<!--[if (gte IE 9)|!(IE)]>
+    <!-->
+<!--<![endif]-->
+<!--[if lte IE 8 ]>
+    <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+    <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+<script src="__PUBLIC__/js/jquery-1.9.1.min.js" ></script>
+<script src="__PUBLIC__/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/js/bootstrap.offcanvas.min.js"></script>
+<script src="__PUBLIC__/js/jquery.cookie.js"></script>
+<script>
+ $(".memberbtn").click(function(){
+     // alert($(this).parents(".membersbox").hasClass("active"))
+     if($(this).parents(".membersbox").hasClass("active")){
+         $(".membersbox").removeClass("active");
+         $(".memberbtn").text("查看");
+     }else{
+         $(".membersbox").removeClass("active");
+         $(this).parents(".membersbox").addClass("active");
+         $(".memberbtn").text("查看");
+         $(this).text("收起");
+     }
+
+
+     return false;
+ })
+</script>
+    </body>
+</html>

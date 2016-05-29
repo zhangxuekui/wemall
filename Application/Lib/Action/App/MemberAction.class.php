@@ -4,7 +4,222 @@ class MemberAction extends Action {
 
 	}
 
-	function index() {
+    public function init($type = 'index')
+    {
+        $agent = $_SERVER['HTTP_USER_AGENT'];
+        if (strpos($agent, "icroMessenger") && ((!isset($_GET['uid']) && empty($_SESSION["uid"])) || isset($_GET['refresh']))) {
+            import('Wechat', APP_PATH . 'Common/Wechat', '.class.php');
+            $config = M("Wxconfig")->where(array(
+                "id" => "1"
+            ))->find();
+            $options = array(
+                'token' => $config ["token"], // 填写你设定的key
+                'encodingaeskey' => $config ["encodingaeskey"], // 填写加密用的EncodingAESKey
+                'appid' => $config ["appid"], // 填写高级调用功能的app id
+                'appsecret' => $config ["appsecret"], // 填写高级调用功能的密钥
+                'partnerid' => $config ["partnerid"], // 财付通商户身份标识
+                'partnerkey' => $config ["partnerkey"], // 财付通商户权限密钥Key
+                'paysignkey' => $config ["paysignkey"]  // 商户签名密钥Key
+            );
+            $weObj = new Wechat ($options);
+            $info = $weObj->getOauthAccessToken();
+            if (!$info) {
+                $callback = 'http://' . $_SERVER ['SERVER_NAME'] . U("App/Index/$type", $_GET);
+                $url = $weObj->getOauthRedirect($callback, '', 'snsapi_base');
+                header("Location: $url");
+                exit();
+            } else {
+                $_SESSION['uid'] = $_POST['uid'] = $_GET['uid'] = $info['openid'];
+            }
+        }
+
+        if (!empty($_SESSION["uid"]) && empty($_GET['uid'])) {
+            $_GET['uid'] = $_SESSION["uid"];
+        }
+
+        if (empty($_GET['uid'])) {
+            $url = 'http://' . $_SERVER ['SERVER_NAME'] . U('App/Member/login');
+            header("Location: $url");
+            exit();
+        }
+    }
+    function index() {
+        $this->init('member');
+        $uid = $_SESSION ['uid'];
+		if ($uid) {
+			$info = R ( "Api/Api/gettheme" );
+			C ( "DEFAULT_THEME", $info ["theme"] );
+			$this->assign ( "info", $info );
+			
+            $usersresult = R ( "Api/Api/getuser", array (
+                $uid 
+			) );
+			
+			$where = array();
+			$where ["status"] = 0;
+			$where ["level_id"] = $usersresult['id'];
+			$start_price = M ( "Order_level" )->where($where)->sum('price');
+			
+			$where = array();
+			$where ["status"] = 1;
+			$where ["level_id"] = $usersresult['id'];
+			$over_price = M ( "Order_level" )->where($where)->sum('price');
+			
+			$where = array();
+			$where ["status"] = 2;
+			$where ["level_id"] = $usersresult['id'];
+			$confirm_price = M ( "Order_level" )->where($where)->sum('price');
+			
+			$where = array();
+			$where ["status"] = 3;
+			$where ["level_id"] = $usersresult['id'];
+			$add_over_price = M ( "Order_level" )->where($where)->sum('price');
+			
+			$where = array();
+			$where ["status"] = 0;
+			$where ["uid"] = $usersresult['id'];
+			$get_start_price = M ( "Tx_record" )->where($where)->sum('price');
+			
+			$where = array();
+			$where ["status"] = 1;
+			$where ["uid"] = $usersresult['id'];
+			$get_end_price = M ( "Tx_record" )->where($where)->sum('price');
+			
+			$start_price = $start_price>0 ? $start_price : 0;
+			$over_price = $over_price>0 ? $over_price : 0;
+			$confirm_price = $confirm_price>0 ? $confirm_price : 0;
+			$add_over_price = $add_over_price>0 ? $add_over_price : 0;
+			$get_end_price = $get_end_price>0 ? $get_end_price : 0;
+			$get_start_price = $get_start_price>0 ? $get_start_price : 0;
+			
+			$all_price = $start_price+$over_price+confirm_price+add_over_price;
+			
+			$all_price = bcadd($start_price, $over_price, 2);
+			$all_price = bcadd($all_price, $confirm_price, 2);
+			$all_price = bcadd($all_price, $add_over_price, 2);
+			
+			
+			$this->assign ( "start_price", $start_price );
+			$this->assign ( "over_price", $over_price );
+			$this->assign ( "confirm_price", $confirm_price );
+			$this->assign ( "add_over_price", $add_over_price );
+			$this->assign ( "get_start_price", $get_start_price );
+			$this->assign ( "get_end_price", $get_end_price );
+			$this->assign ( "all_price", $all_price );
+			$this->assign ( "users", $usersresult );
+			
+			$type_a_url = 'http://' . $_SERVER ['SERVER_NAME']. U('App/Index/member_info',array('type'=>1,'id'=>$usersresult['id']));
+			$type_b_url = 'http://' . $_SERVER ['SERVER_NAME']. U('App/Index/member_info',array('type'=>2,'id'=>$usersresult['id']));
+			$type_c_url = 'http://' . $_SERVER ['SERVER_NAME']. U('App/Index/member_info',array('type'=>3,'id'=>$usersresult['id']));
+			$this->assign ( "type_a_url", $type_a_url );
+			$this->assign ( "type_b_url", $type_b_url );
+			$this->assign ( "type_c_url", $type_c_url );
+			
+			$all_cnt = $usersresult['a_cnt']+$usersresult['b_cnt']+$usersresult['c_cnt'];
+			$this->assign ( "all_cnt", $all_cnt );
+			
+			$where = array();
+			$where ["uid"] = $usersresult['id'];
+			$tx_record = M ( "Tx_record" )->where($where)->select();
+
+			$this->assign ( "tx_record", $tx_record );
+			
+			if($usersresult['member']==1 && (empty($usersresult['ticket']) || empty($usersresult['url'])))
+			{
+				$this->add_member($usersresult['id'],$usersresult['uid']);
+			}
+			
+			$where = array();
+			$where ["level_id"] = $usersresult['id'];
+			$all_buy = M ( "Order_level" )->where($where)->count();
+			
+			$where = array();
+			$where ["status"] = 0;
+			$where ["level_id"] = $usersresult['id'];
+			$all_over_buy = M ( "Order_level" )->where($where)->count();
+			
+			$all_start_buy = $all_buy - $all_over_buy;//已付款
+			
+			$this->assign ( "all_buy", $all_start_buy );//已付款
+			$this->assign ( "all_over_buy", $all_over_buy );//未付款
+			$this->assign ( "all_count_buy", $all_buy );//总付款
+			
+			//营业额
+			/*$result = M ( "Good" )->find ();
+              $all_buy_price = $result['price']*$all_buy;
+              $this->assign ( "all_buy_price", $all_buy_price );*/
+			$db = new Model();
+            $ALL_COUNT = $db->query("SELECT sum(`totalprice`) as total FROM `wemall_order_level` inner join `wemall_order` on `wemall_order_level`.`order_id` =  `wemall_order`.`orderid` where `level_id`=$usersresult[id]");
+			$all_buy_price = empty($ALL_COUNT[0]['total']) ? 0 : $ALL_COUNT[0]['total'];
+			$this->assign ( "all_buy_price", $all_buy_price );
+			
+			//推荐人
+			$l_name = $this->get_l_info($usersresult['l_id']);
+			$l_name = $l_name['nickname'];
+			$l_name = !empty($l_name) ? $l_name : ''.$message_name.'';
+			$this->assign ( "l_name", $l_name );
+			
+			
+			$ticket = R ( "Api/Api/ticket", array (
+                $usersresult 
+			) );
+			
+			$this->assign ( "ticket", $ticket['ticket'] );
+			
+			$this->assign ( "dongjia_time", $this->dongjia_time );
+
+
+            //是否已经签到
+            $signins = M('signin')->query('select * from '.DB_PREFIX.'signin where uid='.$uid.' and FROM_UNIXTIME(addtime,"%Y-%m-%d")='.'"'.date('Y-m-d',time()).'"',true);
+            $signin_status = 0;
+            if($signins) {
+                $signin_status = 1;
+            }
+            $this->assign('signin_status',$signin_status);
+			$url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.'g=App&m=Member&a=register&mid='.$usersresult['id'];
+			$this->assign ( "member_url", $url );
+            $data['action_name'] = 'memberindex';
+            $this->assign('data',$data);			
+			$this->display ();
+		} else {
+			echo '请使用微信访问!';
+		}
+    }
+    /*
+     *签到
+     */
+    function signin() {
+        $this->init('member');
+        $uid = $_SESSION ['uid'];
+        $url = 'http://' . $_SERVER ['SERVER_NAME'] . U('App/Member/login');
+        if($uid) {
+            $signins = M('signin')->query('select * from '.DB_PREFIX.'signin where uid='.$uid.' and FROM_UNIXTIME(addtime,"%Y-%m-%d")='.'"'.date('Y-m-d',time()).'"',true);
+            if(!empty($signins)) {
+                M('signin')->add(array('uid'=>$uid,'addtime'=>time()));                
+            }
+            echo json_encode(array('status'=>1,'msg'=>'签到完成'));
+        } else {
+            echo json_encode(array('status'=>0,'msg'=>$url));
+        }
+        exit;
+    }
+    //成员管理
+    function members() {
+        $this->init('member');
+        $uid = $_SESSION ['uid'];
+		if ($uid) {
+			$info = R ( "Api/Api/gettheme" );
+			C ( "DEFAULT_THEME", $info ["theme"] );
+			$this->assign ( "info", $info );
+			
+            $usersresult = R ( "Api/Api/getuser", array (
+                $uid 
+			) );
+            $this->display();
+        }
+    }
+    
+	function info() {
 		$uid = $_GET['uid'];
 		$where = array('uid'=>$uid);
 		$users = M("User")->where($where)->find();
@@ -38,12 +253,12 @@ class MemberAction extends Action {
 			$upload = new UploadFile (); // 实例化上传类
 			$upload->maxSize = 3145728; // 设置附件上传大小
 			$upload->allowExts = array (
-					'jpg',
-					'gif',
-					'png',
-					'jpeg',
-					'xlsx',
-					'xls'
+                'jpg',
+                'gif',
+                'png',
+                'jpeg',
+                'xlsx',
+                'xls'
 			); // 设置附件上传类型
 			$upload->savePath = './Public/Uploads/';
 			$wx_info = array();
@@ -79,14 +294,15 @@ class MemberAction extends Action {
 			}
 
 			$thisUser = M("User")->where(array('login'=>$_POST['login']))->find();
+
 			if (empty($thisUser)) {
 				$this->error("用户名不存在！");
 				exit;
 			}else {
 				if ($thisUser['password'] == md5($_POST['password'])) {
 					$_SESSION["uid"] = $thisUser['uid'];
-					
-					$this->success("登陆成功！",U('App/Index/member',array("uid"=>$thisUser['uid'])) );exit;
+					$_SESSION['wx_info'] = json_decode($thisUser['wx_info']);
+					$this->success("登陆成功！",U('App/Member/index',array("uid"=>$thisUser['uid'])) );exit;
 				}else {
 					$this->error("密码错误！");
 					exit;
@@ -140,18 +356,18 @@ class MemberAction extends Action {
 				if(!empty($results['id']))
 				{
 					import ( 'Wechat', APP_PATH . 'Common/Wechat', '.class.php' );
-			$config = M ( "Wxconfig" )->where ( array (
-					"id" => "1" 
-			) )->find ();
+                    $config = M ( "Wxconfig" )->where ( array (
+                        "id" => "1" 
+                    ) )->find ();
 			
-			$options = array (
-					'token' => $config ["token"], // 填写你设定的key
-					'encodingaeskey' => $config ["encodingaeskey"], // 填写加密用的EncodingAESKey
-					'appid' => $config ["appid"], // 填写高级调用功能的app id
-					'appsecret' => $config ["appsecret"], // 填写高级调用功能的密钥
-					'partnerid' => $config ["partnerid"], // 财付通商户身份标识
-					'partnerkey' => $config ["partnerkey"], // 财付通商户权限密钥Key
-					'paysignkey' => $config ["paysignkey"]  // 商户签名密钥Key
+                    $options = array (
+                        'token' => $config ["token"], // 填写你设定的key
+                        'encodingaeskey' => $config ["encodingaeskey"], // 填写加密用的EncodingAESKey
+                        'appid' => $config ["appid"], // 填写高级调用功能的app id
+                        'appsecret' => $config ["appsecret"], // 填写高级调用功能的密钥
+                        'partnerid' => $config ["partnerid"], // 财付通商户身份标识
+                        'partnerkey' => $config ["partnerkey"], // 财付通商户权限密钥Key
+                        'paysignkey' => $config ["paysignkey"]  // 商户签名密钥Key
 					);
 					$weObj = new Wechat ( $options );
 				
@@ -232,6 +448,30 @@ class MemberAction extends Action {
 			
 		}
 		$this->display("./default/Index/member_register");
+	}
+
+    public function get_l_info($l_id)
+	{
+		$result_l = M("User")->where(array('id'=>$l_id))->find();
+		if(!empty($result_l))
+		{
+			$wx_info = json_decode($result_l['wx_info'],true);
+			$l_name = $wx_info['nickname'];
+			$img = !empty($wx_info['headimgurl'])?$wx_info['headimgurl']:'../Public/Static/images/defult.jpg';
+			$headimgurls = $img;
+		}
+		
+		include dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/Public/Conf/button_config.php'; 
+		
+		$l_name = !empty($l_name) ? $l_name : ''.$message_name.'';
+		$headimgurl = !empty($headimgurls) ? $headimgurls : $headimgurl;
+		
+		$headimgurl = !empty($headimgurl)?$headimgurl:'../Public/Static/images/defult.jpg';
+		
+		$info['headimgurl'] = $headimgurl;
+		$info['nickname'] = $l_name;
+		
+		return $info;
 	}
 	
 }

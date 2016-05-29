@@ -1,0 +1,79 @@
+<include file="Public:header"/>
+<!-- =========================================== mycode =====================================- -->
+<div class="container-fluid">
+    <div class="row clearfix center-block maxw">
+        <div class="col-md-12 column nopadding">
+            <div class="fenleileft">
+                <ul class="links list-unstyled">
+                    <volist name="data.menus" id="menus">
+                        <li <if condition="$cate_id eq $menus['id']">class="active" </if>><a href="{:U('app/Goods/cate','cate_id='.$menus['id'])}">{$menus.name}</a></li>
+                    </volist>
+                </ul>
+            </div>
+            <div class="fenleiright">
+                <div class="search-top">
+                    <form action="{:U('app/Goods/cate')}" id="search">
+                        <div class="form-group">
+                            <input type="text" name="keywords" id="keywords" class="form-control" value="{$keywords}">
+                            <label for=""><img src="__PUBLIC__/img/search.png" alt=""></label>
+                            <input type="submit" class="submitbtn" value="00">
+                        </div>
+                    </form>
+                </div>
+                <div class="row shangpinliebiao1">
+                    <volist name="data.goods_list" id="goods_list">
+                        <div class="col-xs-6">
+                            <div class="shangpinjianjie">
+                                <div class="jianjieimg">
+                                    <img src="__PUBLIC__/Uploads/{$goods_list.image}" class="center-block" alt="">
+                                </div>
+                                <div class="jianjieinfo">
+                                    <h3>{$goods_list.name}</h3>
+                                    <p><span class="jianjieleixin">3包装</span> <span class="pull-right jianjieprice"><span class="small">¥</span>{$goods_list.price}</span></p>
+                                </div>
+                                <div class="buylink">
+                                    <a href="{:U('app/Goods/goodsdetails','goods_id='.$goods_list['id'])}" class="btnlong">购买</a>
+                                </div>
+                            </div>
+                        </div>
+                    </volist>
+
+                </div>
+                {$page}
+            </div>
+
+            <include file="Public:footermenu"/>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- ============================================ end =======================================- -->
+
+
+
+<!--[if (gte IE 9)|!(IE)]>
+    <!-->
+<!--<![endif]-->
+<!--[if lte IE 8 ]>
+    <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+    <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+<script src="__PUBLIC__/js/jquery-1.9.1.min.js" ></script>
+<script src="__PUBLIC__/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/js/bootstrap.offcanvas.min.js"></script>
+<script src="__PUBLIC__/js/jquery.cookie.js"></script>
+<script>
+ $("#search").submit(function(){
+     var keywords = $('#keywords').val();
+     if(keywords) {
+         location.href= "{:U('app/Goods/cate',array('keywords'=>'"+keywords+"'))}"                 
+     }
+     return false;
+ })
+</script>
+    </body>
+</html>

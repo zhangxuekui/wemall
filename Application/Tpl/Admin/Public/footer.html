@@ -47,7 +47,15 @@
 			$(this).addClass('active');
 			$('#breadcrumbs ul li').eq(1).html('提现管理');
 			$('#main_iframe').attr("src","{:U('Admin/Tx/index')}");
-		});
+		 });
+
+         /* 网站管理 */
+		 $('.nav.nav-list li').eq(7).click(function() {
+			 $('.nav.nav-list li').removeClass('active');
+			 $(this).addClass('active');
+			 $('#breadcrumbs ul li').eq(1).html('网站管理');
+			 $('#main_iframe').attr("src","{:U('Admin/Website/index')}");
+		 });
 		</script>
 		</body>
 </html>

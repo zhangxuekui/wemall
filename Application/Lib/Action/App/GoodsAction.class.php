@@ -78,10 +78,52 @@ class GoodsAction extends Action
             }
             M('good')->where('id=' .$goods_id)->setInc('viewcount',1);
             M('statistics')->add(array('goods_id' =>$goods_id,'uid'=>$uid,'view_time'=>time()));
+
+            $data['action_name'] = ACTION_NAME;
+            $this->assign('data',$data);
             $this->assign("goods", $goodsresult);
             $this->display();
         } else {
             echo '商品参数有误';
         }
+    }
+
+    function cate() {
+        $this->init();
+        $info = R("Api/Api/gettheme");
+        C("DEFAULT_THEME", $info ["theme"]);
+
+        $limit = 8;
+        $cate_id = $this->_get('cate_id','htmlspecialchars,strip_tags');
+        $p = (int)$this->_get('p') ? $this->_get('p') : 1;
+
+        $data['menus'] = M('menu')->order('recommend desc, sort')->select();
+        if(!$cate_id && !empty($data['menus'])) {
+            $cate_id = $data['menus'][0]['id'];
+        }
+
+        $keywords = trim($this->_get('keywords'));
+        if(!empty($keywords)) {
+            $where['name'] = array('like','%'.$keywords.'%');
+        }
+        $where['menu_id'] = $cate_id;
+
+        //获取商品列表
+
+        $data['goods_list'] = M('good')->where($where)->order('sort desc')->limit(($p-1)*$limit,$limit)->select();
+        import('ORG.Util.Page');// 导入分页类
+        $data['goods_count'] = M('good')->where($where)->count();
+
+        $page_class = new Page($data['goods_count'],1);// 实例化分页类 传入总记录数和每页显示的记录数
+        $show = $page_class->show();// 分页显示输出
+
+        
+        $data['action_name'] = ACTION_NAME;
+
+        $this->assign('page',$show);// 赋值分页输出
+        $this->assign('data',$data);
+        $this->assign('keywords',$keywords);
+        $this->assign('cate_id',$cate_id);
+        $this->display();
     }
 }

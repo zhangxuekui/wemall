@@ -21,6 +21,8 @@ define( 'APP_SITE', getcwd());
 define ( 'APP_PATH', APP_SITE.'/Application/' );
 
 define ( 'APP_DEBUG', true );
+define('TMPL_CACHE_ON',true);
+define('ACTION_CACHE_ON',false);
 
 require './Core/index.php';
 

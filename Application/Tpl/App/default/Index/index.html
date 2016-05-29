@@ -1,41 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1">
-    -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
-    <meta name="msapplication-TileImage" content="assets/i/app-icon72x72@2x.png">
-    <meta name="msapplication-TileColor" content="#0e90d2">
-    <!-- <link rel="icon" sizes="192x192" href="assets/i/app-icon72x72@2x.png">
-    -->
-    <!-- <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
-    -->
-    <!-- <link rel="icon" type="image/png" href="assets/i/favicon.png">
-    -->
-    <link rel="stylesheet" href="__PUBLIC__/css/normalize.css">
-    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.min.css">
-    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.offcanvas.min.css">
-
-    <link rel="stylesheet" href="__PUBLIC__/css/font-awesome/font-awesome.css" type="text/css" charset="utf-8">
-    <link rel="stylesheet" href="__PUBLIC__/css/style.css">
-    <title>趣优购</title>
-</head>
-<body>
-<!--[if lt IE 8]>
-<p class="browserupgrade">您正在使用一个 <strong>老旧的</strong> 浏览器. 为了您能获取更好的互联网体验，请 <a href="http://browsehappy.com.cn/"
-                                                                                target="_blank">升级</a> 您的浏览器.</p>
-<![endif]-->
-
+<include file="Public:header"/>
 <!-- =========================================== mycode =====================================- -->
 <div class="container-fluid">
     <div class="row clearfix center-block maxw">
@@ -165,7 +128,7 @@
                                 </a>
                             </div>
                             <div class="jianjieinfo">
-                                <a href="{:U('app/goods/goodsdetails','goods_id='.$goodsvo['id'])}"><h3>
+                                <a href="{:U('app/Goods/goodsdetails','goods_id='.$goodsvo['id'])}"><h3>
                                     {$goodsvo.name}</h3></a>
                                 <p><span class="jianjieleixin">3包装</span> <span class="pull-right jianjieprice"><span
                                         class="small">¥</span>{$goodsvo.price}</span></p>
@@ -174,34 +137,7 @@
                     </div>
                 </volist>
             </div>
-            <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-                <div class="navbar-bottom-my row center-block maxw">
-                    <div class="col-xs-3 nopadding active">
-                        <a href="" class="text-center">
-                            <img src="__PUBLIC__/img/menu1.png" class="center-block" alt="">
-                            首页
-                        </a>
-                    </div>
-                    <div class="col-xs-3 nopadding">
-                        <a href="" class="text-center">
-                            <img src="__PUBLIC__/img/menu1.png" class="center-block" alt="">
-                            分类
-                        </a>
-                    </div>
-                    <div class="col-xs-3 nopadding">
-                        <a href="" class="text-center">
-                            <img src="__PUBLIC__/img/menu1.png" class="center-block" alt="">
-                            活动中心
-                        </a>
-                    </div>
-                    <div class="col-xs-3 nopadding">
-                        <a href="" class="text-center">
-                            <img src="__PUBLIC__/img/menu1.png" class="center-block" alt="">
-                            我的
-                        </a>
-                    </div>
-                </div>
-            </nav>
+            <include file="Public:footermenu"/>
         </div>
     </div>
 </div>
