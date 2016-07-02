@@ -3,7 +3,7 @@
 	error_reporting(E_ALL & ~E_NOTICE);
     define('DB_HOST', 'localhost');
     define('DB_USER', 'root');
-    define('DB_PWD', '');
+    define('DB_PWD', 'shork0527');
     define('DB_NAME', 'we');
     define('DB_PREFIX', 'wemall_');
 	$conn = @mysql_connect(DB_HOST, DB_USER, DB_PWD) or die('数据库链接失败：'.mysql_error());

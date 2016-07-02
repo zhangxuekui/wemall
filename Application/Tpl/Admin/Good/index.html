@@ -58,7 +58,7 @@
                                                 <td>{$result.name}</td>
                                                 <td>{$result.menu}</td>
                                                 <td>{$result.price}</td>
-                                                <td><if condition="$result.recommend eq 1">主页推荐位置<elseif condition="$result.recommend eq 2"/>主页位置<else />未推荐</if></td>
+                                                <td><if condition="$result.recommend eq 1">主页推荐位置<elseif condition="$result.recommend eq 2"/>主页位置<elseif condition="$result.recommend eq 3"/>热卖专区<elseif condition="$result.recommend eq 4 "/>限时秒杀<elseif condition="$result.recommend eq 5"/>免单专区</if></td>
                                                 <td>{$result.time}</td>
                                                 <td>{$result.viewcount}</td>
                                                 <td><a href="javascript:void(0);" onclick="reGood(this);"
@@ -100,6 +100,16 @@
                                                 </td>
                                             </tr>
                                             <tr>
+                                                <td>商品地址:</td>
+                                                <td><input type="text" class="input col-sm-6" name="weblink" value="{$weblink}">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>优惠券地址:</td>
+                                                <td><input type="text" class="input col-sm-6" name="couponslink" value="{$couponslink}">
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <td>商品价格:</td>
                                                 <td><input type="text" class="input col-sm-2" name="addprice" value="">
                                                 </td>
@@ -116,6 +126,9 @@
                                                         <option value="0">不推荐</option>
                                                         <option value="1">主页推荐位置</option>
                                                         <option value="2">主页位置</option>
+                                                        <option value="3">热卖专区</option>
+                                                        <option value="4">热卖专区</option>
+                                                        <option value="5">免单专区</option>
                                                     </select>
                                                 </td>
                                             </tr>
@@ -136,6 +149,12 @@
                                                     <option value="1">出售</option>
                                                     <option value="0">下架</option>
                                                 </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>商品描述：</td>
+                                                <td>
+                                                    <textarea class="input col-sm-6" rows="3" name="describe"></textarea>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>商品详情:</td>
@@ -317,6 +336,10 @@
                     $('select[name="recommend"]').val(json.recommend);
                     $('input[name="addsort"]').val(json.sort);
                     $('select[name="addstatus"]').val(json.status);
+                    $('input[name="weblink"]').val(json.weblink);
+                    $('input[name="couponslink"]').val(json.couponslink);
+                    $('textarea[name="describe"]').val(json.describe);
+                    
                     $('#myEditor').html(json.detail);
 
                     if (flag) {

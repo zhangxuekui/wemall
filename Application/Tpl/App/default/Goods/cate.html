@@ -6,13 +6,13 @@
             <div class="fenleileft">
                 <ul class="links list-unstyled">
                     <volist name="data.menus" id="menus">
-                        <li <if condition="$cate_id eq $menus['id']">class="active" </if>><a href="{:U('app/Goods/cate','cate_id='.$menus['id'])}">{$menus.name}</a></li>
+                        <li <if condition="$cate_id eq $menus['id']">class="active" </if>><a href="{:U('App/Goods/cate','cate_id='.$menus['id'])}">{$menus.name}</a></li>
                     </volist>
                 </ul>
             </div>
             <div class="fenleiright">
                 <div class="search-top">
-                    <form action="{:U('app/Goods/cate')}" id="search">
+                    <form action="{:U('App/Goods/cate')}" id="search">
                         <div class="form-group">
                             <input type="text" name="keywords" id="keywords" class="form-control" value="{$keywords}">
                             <label for=""><img src="__PUBLIC__/img/search.png" alt=""></label>
@@ -32,7 +32,7 @@
                                     <p><span class="jianjieleixin">3包装</span> <span class="pull-right jianjieprice"><span class="small">¥</span>{$goods_list.price}</span></p>
                                 </div>
                                 <div class="buylink">
-                                    <a href="{:U('app/Goods/goodsdetails','goods_id='.$goods_list['id'])}" class="btnlong">购买</a>
+                                    <a href="{:U('App/Goods/goodsdetails','goods_id='.$goods_list['id'])}" class="btnlong">购买</a>
                                 </div>
                             </div>
                         </div>

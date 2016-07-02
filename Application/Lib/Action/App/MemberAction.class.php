@@ -54,7 +54,9 @@ class MemberAction extends Action {
             $usersresult = R ( "Api/Api/getuser", array (
                 $uid 
 			) );
-			
+            //import('Org.Util.QRcode');//thinkphp
+            //\QRcode::png('url:http://www.leipi.org', './Public/img/test1.png', 'L',4, 2);
+
 			$where = array();
 			$where ["status"] = 0;
 			$where ["level_id"] = $usersresult['id'];
@@ -171,6 +173,7 @@ class MemberAction extends Action {
 
             //是否已经签到
             $signins = M('signin')->query('select * from '.DB_PREFIX.'signin where uid='.$uid.' and FROM_UNIXTIME(addtime,"%Y-%m-%d")='.'"'.date('Y-m-d',time()).'"',true);
+
             $signin_status = 0;
             if($signins) {
                 $signin_status = 1;
@@ -189,17 +192,16 @@ class MemberAction extends Action {
      *签到
      */
     function signin() {
-        $this->init('member');
+        $this->init();
         $uid = $_SESSION ['uid'];
-        $url = 'http://' . $_SERVER ['SERVER_NAME'] . U('App/Member/login');
         if($uid) {
             $signins = M('signin')->query('select * from '.DB_PREFIX.'signin where uid='.$uid.' and FROM_UNIXTIME(addtime,"%Y-%m-%d")='.'"'.date('Y-m-d',time()).'"',true);
-            if(!empty($signins)) {
+            if(empty($signins)) {
                 M('signin')->add(array('uid'=>$uid,'addtime'=>time()));                
             }
             echo json_encode(array('status'=>1,'msg'=>'签到完成'));
         } else {
-            echo json_encode(array('status'=>0,'msg'=>$url));
+            echo json_encode(array('status'=>0,'msg'=>'请登录'));
         }
         exit;
     }
@@ -444,7 +446,7 @@ class MemberAction extends Action {
 			
 			M("User")->where($map)->save($user);
 			$_SESSION["uid"] = $new_user_id;
-			$this->success("登陆成功！",U('App/Index/member',array("uid"=>$id)));exit;
+			$this->success("登陆成功！",U('App/Member/index',array("uid"=>$id)));exit;
 			
 		}
 		$this->display("./default/Index/member_register");

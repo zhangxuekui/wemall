@@ -78,6 +78,9 @@ class GoodAction extends PublicAction {
 				$data ["image"] = $picurl;
 			}
 			$data ["status"] = $_POST ["addstatus"];
+            $data ['weblink'] = $_POST ['weblink']; 
+            $data['couponslink'] = $_POST['couponslink'];
+            $data['describe'] = $_POST['describe'];
 			if(!empty($_POST ["editorValue"]))$data ["detail"] = $_POST ["editorValue"];
 
 			$result = R ( "Api/Api/addgood", array($data) );
@@ -97,6 +100,9 @@ class GoodAction extends PublicAction {
 				$this->error ( "未上传图片！" );
 			}
 			$data ["status"] = $_POST ["addstatus"];
+            $data ['weblink'] = $_POST ['weblink'];
+            $data['couponslink'] = $_POST['couponslink'];
+            $data['describe'] = $_POST['describe'];
 			$data ["detail"] = $_POST ["editorValue"];
 			
 			$result = R ( "Api/Api/addgood", array($data) );

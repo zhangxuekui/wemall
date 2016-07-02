@@ -20,29 +20,37 @@
 			$('#breadcrumbs ul li').eq(1).html('商品管理');
 			$('#main_iframe').attr("src","{:U('Admin/Good/index')}");
 		});
-		/* 订单管理 */
+		 /* 活动管理 */
 		$('.nav.nav-list li').eq(3).click(function() {
 			$('.nav.nav-list li').removeClass('active');
 			$(this).addClass('active');
-			$('#breadcrumbs ul li').eq(1).html('订单管理');
-			$('#main_iframe').attr("src","{:U('Admin/Order/index')}");
-		});
+			$('#breadcrumbs ul li').eq(1).html('活动管理');
+			$('#main_iframe').attr("src","{:U('Admin/Activity/index')}");
+		 });
+
+         /* 订单管理 */
+		 $('.nav.nav-list li').eq(4).click(function() {
+			 $('.nav.nav-list li').removeClass('active');
+			 $(this).addClass('active');
+			 $('#breadcrumbs ul li').eq(1).html('订单管理');
+			 $('#main_iframe').attr("src","{:U('Admin/Order/index')}");
+		 });
 		/* 用户管理 */
-		$('.nav.nav-list li').eq(4).click(function() {
+		$('.nav.nav-list li').eq(5).click(function() {
 			$('.nav.nav-list li').removeClass('active');
 			$(this).addClass('active');
 			$('#breadcrumbs ul li').eq(1).html('用户管理');
 			$('#main_iframe').attr("src","{:U('Admin/User/index')}");
 		});
 		/* 微信管理 */
-		$('.nav.nav-list li').eq(5).click(function() {
+		$('.nav.nav-list li').eq(6).click(function() {
 			$('.nav.nav-list li').removeClass('active');
 			$(this).addClass('active');
 			$('#breadcrumbs ul li').eq(1).html('微信管理');
 			$('#main_iframe').attr("src","{:U('Admin/Weixin/index')}");
 		});
 		/* 提现管理 */
-		$('.nav.nav-list li').eq(6).click(function() {
+		$('.nav.nav-list li').eq(7).click(function() {
 			$('.nav.nav-list li').removeClass('active');
 			$(this).addClass('active');
 			$('#breadcrumbs ul li').eq(1).html('提现管理');
@@ -50,7 +58,7 @@
 		 });
 
          /* 网站管理 */
-		 $('.nav.nav-list li').eq(7).click(function() {
+		 $('.nav.nav-list li').eq(8).click(function() {
 			 $('.nav.nav-list li').removeClass('active');
 			 $(this).addClass('active');
 			 $('#breadcrumbs ul li').eq(1).html('网站管理');

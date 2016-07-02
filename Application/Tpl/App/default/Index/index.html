@@ -53,7 +53,7 @@
             </div>
             <div class="row fenleis">
                 <div class="col-xs-3 nopadding">
-                    <a href="" class="text-center">
+                    <a href="{:U('App/Goods/cate')}" class="text-center">
                         <img src="__PUBLIC__/img/fenlei1.png" class="center-block" alt="">
                         商品分类
                     </a>
@@ -65,7 +65,7 @@
                     </a>
                 </div>
                 <div class="col-xs-3 nopadding">
-                    <a href="" class="text-center">
+                    <a href="{:U('App/Goods/active','recommend_id=4')}" class="text-center">
                         <img src="__PUBLIC__/img/fenlei1.png" class="center-block" alt="">
                         限时秒杀
                     </a>
@@ -79,7 +79,7 @@
             </div>
             <div class="row zhuanqus">
                 <div class="col-xs-6">
-                    <a href="">
+                    <a href="{:U('App/Goods/active','recommend_id=3')}">
                         <div class="zhuanqu">
                             <img src="__PUBLIC__/img/zhuanqu1.png" alt="">
                             <h3 class="righttitle">热卖专区</h3>
@@ -87,7 +87,7 @@
                     </a>
                 </div>
                 <div class="col-xs-6">
-                    <a href="">
+                    <a href="{:U('App/Goods/active','recommend_id=5')}">
                         <div class="zhuanqu">
                             <img src="__PUBLIC__/img/zhuanqu1.png" alt="">
                             <h3 class="lefttitle">免单专区</h3>
@@ -99,9 +99,9 @@
                 <h3 class="tuijiantitle">推荐商品</h3>
                 <volist name="recommend" id="recgoods">
                     <div class="shangpin">
-                        <a href="{:U('app/Goods/goodsdetails','goods_id='.$recgoods['id'])}"><img src="__PUBLIC__/Uploads/{$recgoods.image}" class="shangpinimg pull-left" alt=""></a>
+                        <a href=""><img src="__PUBLIC__/Uploads/{$recgoods.image}" class="shangpinimg pull-left" alt=""></a>
                         <div class="shangpininfo">
-                            <h4>{$recgoods.name}</h4>
+                            <h4><a href="{:U('App/Goods/goodsdetails','goods_id='.$recgoods['id'])}">{$recgoods.name}</a></h4>
                             <p class="leixin">内部卷: <span class="jg">¥</span><span class="price">15.99</span></p>
                             <p class="info">优惠卷剩余<span class="baseColor num">4800</span>张,已领取<span
                                     class="num">5999</span>张
@@ -111,8 +111,8 @@
                             <div class="price3 text-center">在售价: <span class="jg">¥{$recgoods.price}</span></div>
                             <p class="gmlc clearfix">
                                 购买流程 >
-                                <a href=""><span class="btn1">领卷</span></a>
-                                <a href="" class="pull-right"><span class="btn2">购买</span></a>
+                                <a href="{:U('App/Goods/goodsdetails#qrcode','goods_id='.$recgoods['id'])}"><span class="btn1">领卷</span></a>
+                                <a href="{:U('App/Goods/goodsdetails','goods_id='.$recgoods['id'])}" class="pull-right"><span class="btn2">购买</span></a>
                             </p>
                         </div>
                     </div>
@@ -123,12 +123,12 @@
                     <div class="col-xs-6">
                         <div class="shangpinjianjie">
                             <div class="jianjieimg">
-                                <a href="{:U('app/Goods/goodsdetails','goods_id='.$goodsvo['id'])}">
+                                <a href="{:U('App/Goods/goodsdetails','goods_id='.$goodsvo['id'])}">
                                     <img src="__PUBLIC__/Uploads/{$goodsvo.image}" class="center-block" alt="">
                                 </a>
                             </div>
                             <div class="jianjieinfo">
-                                <a href="{:U('app/Goods/goodsdetails','goods_id='.$goodsvo['id'])}"><h3>
+                                <a href="{:U('App/Goods/goodsdetails','goods_id='.$goodsvo['id'])}"><h3>
                                     {$goodsvo.name}</h3></a>
                                 <p><span class="jianjieleixin">3包装</span> <span class="pull-right jianjieprice"><span
                                         class="small">¥</span>{$goodsvo.price}</span></p>

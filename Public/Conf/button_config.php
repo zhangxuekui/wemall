@@ -53,8 +53,8 @@ $newmenu = '{
 		   }]
 		}';		
 		
-$message_name = '滕州绿之源';
+$message_name = '趣优购';
 $link_config = 'http://mp.weixin.qq.com/s?__biz=MzA4NTQ4OTcxMQ==&mid=204240974&idx=1&sn=78976263ed088381a11d85479cacc5a3#rd';
-$config_good_pic = 'http://www.we.com/Public/Plugin/umeditor/php/upload/20160420/1461167253600.jpg';
-$headimgurl = 'http://www.we.com/Public/Plugin/umeditor/php/upload/20160420/1461167253600.jpg';
+$config_good_pic = 'http://'.$_SERVER['HTTP_HOST'].'/Public/Plugin/umeditor/php/upload/20160420/1461167253600.jpg';
+$headimgurl = 'http://'.$_SERVER['HTTP_HOST'].'/Public/Plugin/umeditor/php/upload/20160420/1461167253600.jpg';
 ?>

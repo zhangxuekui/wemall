@@ -19,7 +19,7 @@
 
             <div class="minelinks">
                 <ul class="list-unstyled">
-                    <li><a href="{:U('app/Member/members')}">
+                    <li><a href="{:U('App/Member/members')}">
                         我的成员
                         <span class="pull-right">
                             <span class="num1">{$all_cnt}</span> <i class="fa fa-chevron-right"></i>
@@ -85,7 +85,7 @@
  $(".btnqd").click(function() {
      var href = '';
      $.ajax({
-         url:'{:U('app/Member/signin')}',
+         url:'{:U('App/Member/signin')}',
          dataType:'json',
          success:function(msg){
              if(msg.status == 1){

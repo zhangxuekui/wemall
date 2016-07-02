@@ -12,7 +12,7 @@ class IndexAction extends PublicAction {
 		}
 		else
 		{
-			$this->group_json = array(1,2,3,4,5,6,7,8);
+			$this->group_json = array(1,2,3,4,5,6,7,8,9);
 		}
 	}
 	public function index() {

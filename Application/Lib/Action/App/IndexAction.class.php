@@ -1,4 +1,5 @@
 <?php
+//主页
 class IndexAction extends Action {
 	function _initialize() {
 		header("Content-type: text/html; charset=utf-8"); 

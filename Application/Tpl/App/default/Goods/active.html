@@ -1,0 +1,50 @@
+<include file="Public:header"/>
+
+<!-- =========================================== mycode =====================================- -->
+<div class="container-fluid">
+    <div class="row clearfix center-block maxw">
+        <div class="col-md-12 column nopadding">
+            <div class="activites">
+                <volist name="data.goods_list" id="goods_list">
+                <div class="activity">
+                    <img src="__PUBLIC__/Uploads/{$goods_list.image}" class="activityimg" alt="">
+                    <img src="__PUBLIC__/img/new.png" class="imgtip" alt="">
+
+                    <div class="activityinfo">
+                        <span class="activitytip">惠</span>
+                        <h3 class="activitytitle">{$goods_list.name}</h3>
+                        <p class="activityarticle">{$goods_list.describe}...</p>
+                        <p class="activityfoot">活动价： <span class="baseColor price1">{$goods_list.price}</span>元/kg <span class="pull-right"><a href="{:U('App/Goods/goodsdetails#qrcode','goods_id='.$goods_list['id'])}" class="btn1">马上领卷</a><a href="{$goods_list.weblink}" class="btn2">马上购买</a></span></p>
+                    </div>
+                </div>
+                </volist>
+            </div>
+            <include file="Public:footermenu"/>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- ============================================ end =======================================- -->
+
+
+
+<!--[if (gte IE 9)|!(IE)]>
+    <!-->
+<!--<![endif]-->
+<!--[if lte IE 8 ]>
+    <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+    <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+<script src="__PUBLIC__/js/jquery-1.9.1.min.js" ></script>
+<script src="__PUBLIC__/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/js/bootstrap.offcanvas.min.js"></script>
+<script src="__PUBLIC__/js/jquery.cookie.js"></script>
+<script>
+
+</script>
+</body>
+</html>

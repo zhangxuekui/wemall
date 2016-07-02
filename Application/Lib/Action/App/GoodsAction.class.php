@@ -31,7 +31,10 @@ class GoodsAction extends Action
                 $_SESSION['uid'] = $_POST['uid'] = $_GET['uid'] = $info['openid'];
             }
         }
-
+        //设置推广人的id
+        if(!empty($_GET['source_id'])) {
+            setcookie('source_name',$_GET['source_id'],time()+3600*24*7);
+        }
         if (!empty($_SESSION["uid"]) && empty($_GET['uid'])) {
             $_GET['uid'] = $_SESSION["uid"];
         }
@@ -77,9 +80,31 @@ class GoodsAction extends Action
                 }
             }
             M('good')->where('id=' .$goods_id)->setInc('viewcount',1);
-            M('statistics')->add(array('goods_id' =>$goods_id,'uid'=>$uid,'view_time'=>time()));
+            if(!empty($_COOKIE['source_name'])) {
+                $source = array('source_id'=>$_COOKIE['source_name']);
+            }
+            $staticstics = array('goods_id' =>$goods_id,'uid'=>$uid,'view_time'=>time());
+            M('statistics')->add(array_merge($source,$staticstics));
 
+            $goods_qrcode = '/Public/QRcode/Good/'.md5($goodsresult['id'].$_SESSION['uid']).'.png';
+            //生成分享商品的二维码
+            include APP_PATH."phpqrcode/qrlib.php";
+            if(!file_exists(APP_SITE.$goods_qrcode)) {
+                QRcode::png('http://'.$_SERVER['SERVER_NAME'].U('App/Goods/goodsdetails',array('goods_id'=>$goodsresult['id'],'source_id'=>$_SESSION['uid'])), APP_SITE.$goods_qrcode, 'L',4, 10);
+            }
+
+            //如果有优惠券则产生二维码地址
+            $coupons_qrcode = '/Public/QRcode/coupons/'.md5($goodsresult['couponslink']).'.png';
+            if(!empty($goodsresult['couponslink'])) {
+                if(!file_exists($coupons_qrcode)) {
+                    QRcode::png($goodsresult['couponslink'], APP_SITE.$coupons_qrcode, 'L',4, 10);                    
+                }
+                $this->assign('coupons_qrcode',$coupons_qrcode);
+            }
+
+            
             $data['action_name'] = ACTION_NAME;
+            $this->assign('qrcode',$goods_qrcode);
             $this->assign('data',$data);
             $this->assign("goods", $goodsresult);
             $this->display();
@@ -124,6 +149,40 @@ class GoodsAction extends Action
         $this->assign('data',$data);
         $this->assign('keywords',$keywords);
         $this->assign('cate_id',$cate_id);
+        $this->display();
+    }
+
+
+    function active() {
+        $this->init();
+        $info = R("Api/Api/gettheme");
+        C("DEFAULT_THEME", $info ["theme"]);
+        $limit = 8;
+        $recommend_id = $this->_get('recommend_id','htmlspecialchars,strip_tags');
+        $p = (int)$this->_get('p') ? $this->_get('p') : 1;
+
+        if($recommend_id) {
+            $where['recommend'] = $recommend_id;            
+        }
+
+        //获取商品列表
+
+        $data['goods_list'] = M('good')->where($where)->order('sort desc')->limit(($p-1)*$limit,$limit)->select();
+
+        import('ORG.Util.Page');// 导入分页类
+        $data['goods_count'] = M('good')->where($where)->count();
+
+        $page_class = new Page($data['goods_count'],1);// 实例化分页类 传入总记录数和每页显示的记录数
+        $show = $page_class->show();// 分页显示输出
+
+        
+
+        $this->assign('page',$show);// 赋值分页输出
+        $this->assign('keywords',$keywords);
+        $this->assign('cate_id',$cate_id);
+        
+        $data['action_name'] = ACTION_NAME;
+        $this->assign('data',$data);
         $this->display();
     }
 }
