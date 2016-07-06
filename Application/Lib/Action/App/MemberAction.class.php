@@ -37,6 +37,7 @@ class MemberAction extends Action {
         if (!empty($_SESSION["uid"]) && empty($_GET['uid'])) {
             $_GET['uid'] = $_SESSION["uid"];
         }
+        echo 1111;
         var_dump($_SESSION);
         if (empty($_GET['uid'])) {
             $url = 'http://' . $_SERVER ['SERVER_NAME'] . U('App/Member/login');
