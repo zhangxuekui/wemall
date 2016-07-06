@@ -22,11 +22,9 @@ class MemberAction extends Action {
                 'paysignkey' => $config ["paysignkey"]  // 商户签名密钥Key
             );
             $weObj = new Wechat ($options);
-            if($_GET['test'] == 1) {
-                echo $weObj->getOauthAccessToken();
-                exit;
-            }
+
             $info = $weObj->getOauthAccessToken();
+            var_dump($info);
             if (!$info) {
                 $callback = 'http://' . $_SERVER ['SERVER_NAME'] . U("App/Index/$type", $_GET);
                 $url = $weObj->getOauthRedirect($callback, '', 'snsapi_base');
