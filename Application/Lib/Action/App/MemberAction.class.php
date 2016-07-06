@@ -23,7 +23,6 @@ class MemberAction extends Action {
             );
             $weObj = new Wechat ($options);
             $info = $weObj->getOauthAccessToken();
-            var_dump($info);
             if (!$info) {
                 $callback = 'http://' . $_SERVER ['SERVER_NAME'] . U("App/Index/$type", $_GET);
                 $url = $weObj->getOauthRedirect($callback, '', 'snsapi_base');
@@ -475,5 +474,10 @@ class MemberAction extends Action {
 		
 		return $info;
 	}
+
+    //获取永久的微信二维码
+    function mywechatqrcode() {
+        D("App://Member")->add_meber(1);
+    }
 	
 }
