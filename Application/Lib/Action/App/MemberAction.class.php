@@ -7,7 +7,7 @@ class MemberAction extends Action {
     public function init($type = 'index')
     {
         $agent = $_SERVER['HTTP_USER_AGENT'];
-        if (strpos($agent, "icroMessenger") && ((!isset($_GET['uid']) && empty($_SESSION["uid"])) || isset($_GET['refresh']))) {
+        if (strpos($agent, "MicroMessenger") && ((!isset($_GET['uid']) && empty($_SESSION["uid"])) || isset($_GET['refresh']))) {
             import('Wechat', APP_PATH . 'Common/Wechat', '.class.php');
             $config = M("Wxconfig")->where(array(
                 "id" => "1"
@@ -22,6 +22,10 @@ class MemberAction extends Action {
                 'paysignkey' => $config ["paysignkey"]  // 商户签名密钥Key
             );
             $weObj = new Wechat ($options);
+            if($_GET['test'] == 1) {
+                echo $weObj->getOauthAccessToken();
+                exit;
+            }
             $info = $weObj->getOauthAccessToken();
             if (!$info) {
                 $callback = 'http://' . $_SERVER ['SERVER_NAME'] . U("App/Index/$type", $_GET);
