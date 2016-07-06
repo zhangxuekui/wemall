@@ -22,9 +22,8 @@ class MemberAction extends Action {
                 'paysignkey' => $config ["paysignkey"]  // 商户签名密钥Key
             );
             $weObj = new Wechat ($options);
-            echo 333;
             $info = $weObj->getOauthAccessToken();
-            echo 444;
+            var_dump($info);
             if (!$info) {
                 $callback = 'http://' . $_SERVER ['SERVER_NAME'] . U("App/Index/$type", $_GET);
                 $url = $weObj->getOauthRedirect($callback, '', 'snsapi_base');
@@ -38,8 +37,6 @@ class MemberAction extends Action {
         if (!empty($_SESSION["uid"]) && empty($_GET['uid'])) {
             $_GET['uid'] = $_SESSION["uid"];
         }
-        echo 1111;
-        var_dump($_SESSION);
         if (empty($_GET['uid'])) {
             $url = 'http://' . $_SERVER ['SERVER_NAME'] . U('App/Member/login');
             header("Location: $url");
