@@ -478,6 +478,7 @@ class MemberAction extends Action {
     //获取永久的微信二维码
     public function wechatqrcode() {
         D("Member")->add_member(1);
+        echo 1111;
     }
 	
 }
