@@ -6,7 +6,6 @@ class MemberAction extends Action {
 
     public function init($type = 'index')
     {
-        echo 222;exit;
         if (is_weixin() && ((!isset($_GET['uid']) && empty($_SESSION["uid"])) || isset($_GET['refresh']))) {
             import('Wechat', APP_PATH . 'Common/Wechat', '.class.php');
             $config = M("Wxconfig")->where(array(
@@ -23,6 +22,7 @@ class MemberAction extends Action {
             );
             $weObj = new Wechat ($options);
             $info = $weObj->getOauthAccessToken();
+            var_dump($info);
             if (!$info) {
                 $callback = 'http://' . $_SERVER ['SERVER_NAME'] . U("App/Index/$type", $_GET);
                 $url = $weObj->getOauthRedirect($callback, '', 'snsapi_base');
