@@ -6,8 +6,7 @@ class MemberAction extends Action {
 
     public function init($type = 'index')
     {
-        $agent = $_SERVER['HTTP_USER_AGENT'];
-        if (strpos($agent, "MicroMessenger") && ((!isset($_GET['uid']) && empty($_SESSION["uid"])) || isset($_GET['refresh']))) {
+        if (is_weixin() && ((!isset($_GET['uid']) && empty($_SESSION["uid"])) || isset($_GET['refresh']))) {
             import('Wechat', APP_PATH . 'Common/Wechat', '.class.php');
             $config = M("Wxconfig")->where(array(
                 "id" => "1"
@@ -477,8 +476,7 @@ class MemberAction extends Action {
 
     //获取永久的微信二维码
     public function wechatqrcode() {
-        D("Member")->add_member(1);
-        echo 1111;
+        echo D("Member")->add_member(1);
     }
 	
 }
