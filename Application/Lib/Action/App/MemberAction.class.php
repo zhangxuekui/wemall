@@ -6,8 +6,8 @@ class MemberAction extends Action {
 
     public function init($type = 'index')
     {
+        echo 222;exit;
         if (is_weixin() && ((!isset($_GET['uid']) && empty($_SESSION["uid"])) || isset($_GET['refresh']))) {
-            echo 2222;
             import('Wechat', APP_PATH . 'Common/Wechat', '.class.php');
             $config = M("Wxconfig")->where(array(
                 "id" => "1"
