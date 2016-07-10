@@ -6,7 +6,7 @@ class GoodsAction extends Action
     public function init($type = 'index')
     {
         $agent = $_SERVER['HTTP_USER_AGENT'];
-        if (strpos($agent, "icroMessenger") && ((!isset($_GET['uid']) && empty($_SESSION["uid"])) || isset($_GET['refresh']))) {
+        if (is_weixin() && ((!isset($_GET['uid']) && empty($_SESSION["uid"])) || isset($_GET['refresh']))) {
             import('Wechat', APP_PATH . 'Common/Wechat', '.class.php');
             $config = M("Wxconfig")->where(array(
                 "id" => "1"
@@ -22,6 +22,7 @@ class GoodsAction extends Action
             );
             $weObj = new Wechat ($options);
             $info = $weObj->getOauthAccessToken();
+
             if (!$info) {
                 $callback = 'http://' . $_SERVER ['SERVER_NAME'] . U("App/Index/$type", $_GET);
                 $url = $weObj->getOauthRedirect($callback, '', 'snsapi_base');
@@ -184,5 +185,48 @@ class GoodsAction extends Action
         $data['action_name'] = ACTION_NAME;
         $this->assign('data',$data);
         $this->display();
+    }
+
+    
+    //hot热卖专区
+
+    function hot() {
+        $this->init();
+		if ($_GET ['uid']) {
+			
+			$info = R ( "Api/Api/gettheme" );
+			C ( "DEFAULT_THEME", $info ["theme"] );
+			$this->assign ( "info", $info );
+
+			$menuresult = R ( "Api/Api/getmenu" );
+			$this->assign ( "menu", $menuresult );
+
+
+            $limit = 8;
+            $p = (int)$this->_get('p') ? $this->_get('p') : 1;
+
+            $where['recommend'] = 3;
+
+            //获取商品列表
+
+            $data['goods'] = M('good')->where($where)->order('sort desc')->limit(($p-1)*$limit,$limit)->select();
+
+            import('ORG.Util.Page');// 导入分页类
+            $data['goods_count'] = M('good')->where($where)->count();
+
+            $page_class = new Page($data['goods_count'],1);// 实例化分页类 传入总记录数和每页显示的记录数
+            $show = $page_class->show();// 分页显示输出
+
+        
+
+            $this->assign('page',$show);// 赋值分页输出
+        
+            $data['action_name'] = ACTION_NAME;
+            
+            include dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/Public/Conf/button_config.php'; 
+			$this->assign ( "config_good_pic", $config_good_pic );
+            $this->assign ( "data", $data );
+			$this->display ();
+        }
     }
 }

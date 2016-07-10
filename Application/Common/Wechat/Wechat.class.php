@@ -1814,10 +1814,9 @@ class Wechat
 		}
 		$returValue .= "<sign>".$signValue."</sign>";
 		$returValue .= '</xml>';
-		var_dump($returValue);
 		$result = $this->http_post(self::TK_API_URL,$returValue,true);
 		
-		var_dump($result);
+
 		if ($result)
 		{
 			$json = $this->xmlToArray($result);

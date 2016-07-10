@@ -19,22 +19,21 @@ class MemberModel extends RelationModel {
 		return $weObj;
 	}
 	
-	public function add_meber($user_id)
+	public function add_member($user_id)
 	{
 		//生成永久二weima
 		$weObj = $this->init ();
 		$code_id = $user_id;
 		$return = $weObj->getQRCode($code_id,1);
-		
+
 		$data ["id"] = (int)$user_id;
 		$data ["member"] = 1;
 		$data ["ticket"] = $return['ticket'];
 		$data ["url"] = $return['url'];
-		
 		$result = M ( "User" )->save ( $data );
 		
-		if ($result) {
-			return $result;
+		if ($return) {
+			return $return;
 		}
 		else
 		{

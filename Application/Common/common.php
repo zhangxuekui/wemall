@@ -19,6 +19,17 @@ function request_by_other($remote_server, $post_string)
 	$data = file_get_contents($remote_server, false, $stream_context);
 	return $data;
 }
+
+/*
+ * 判断是否是微信浏览器访问
+ */
+function is_weixin(){
+	if ( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
+		return true;
+	}
+	return false;
+}
+
 /**
  * Goofy 2011-11-30
  * getDir()去文件夹列表，getFile()去对应文件夹下面的文件列表,二者的区别在于判断有没有“.”后缀的文件，其他都一样

@@ -9,8 +9,7 @@ class IndexAction extends Action {
 		}
 		else
 		{
-			$agent = $_SERVER['HTTP_USER_AGENT']; 
-			if(!strpos($agent,"icroMessenger")) {
+			if(!is_weixin()) {
 				//echo '请使用微信访问';exit;
 			}
 		}
@@ -19,13 +18,13 @@ class IndexAction extends Action {
 	
 	public function init($type='index')
 	{
-		$agent = $_SERVER['HTTP_USER_AGENT']; 
-		if(strpos($agent,"icroMessenger") && ((!isset($_GET['uid']) && empty($_SESSION["uid"])) || isset($_GET['refresh']))) {
+		if(is_weixin() && ((!isset($_GET['uid']) && empty($_SESSION["uid"])) || isset($_GET['refresh']))) {
 			import ( 'Wechat', APP_PATH . 'Common/Wechat', '.class.php' );
 			$config = M ( "Wxconfig" )->where ( array (
 					"id" => "1" 
 			) )->find ();
-			
+
+            $info = false;
 			$options = array (
 					'token' => $config ["token"], // 填写你设定的key
 					'encodingaeskey' => $config ["encodingaeskey"], // 填写加密用的EncodingAESKey
@@ -36,8 +35,9 @@ class IndexAction extends Action {
 					'paysignkey' => $config ["paysignkey"]  // 商户签名密钥Key
 					);
 			$weObj = new Wechat ( $options );
-			
-			$info = $weObj->getOauthAccessToken();
+			if(isset($_GET['code'])) {
+                $info = $weObj->getOauthAccessToken();
+            }
 			if(!$info)
 			{
 				$callback = 'http://' . $_SERVER ['SERVER_NAME']. U("App/Index/$type",$_GET);
@@ -62,8 +62,7 @@ class IndexAction extends Action {
 			$usersresult = R ( "Api/Api/getuser", array (
 					$uid 
 			) );
-			
-			if(strpos($agent,"icroMessenger") && strlen($uid)>10) {
+			if(is_weixin() && strlen($uid)>10) {
 				if($usersresult['wx_info']==null || $usersresult['wx_info']==false || $usersresult['wx_info']=='false' || $usersresult['wx_info']=='null')
 				{
 					$wx_info = $weObj->getUserInfo($uid);
@@ -89,7 +88,7 @@ class IndexAction extends Action {
 					}
 				}
 			}
-			
+
 			//更新我的可提现金额
 			$where = array();
 			$where ["level_id"] = $usersresult['id'];
@@ -135,7 +134,7 @@ class IndexAction extends Action {
 				$out_trade_no = $info['orderid'];
 				$this->confirm_order_status($out_trade_no);
 			}
-			
+
 			//分销保持资格
 			$this->fenxiao_zige($usersresult);
 		}
@@ -388,6 +387,7 @@ class IndexAction extends Action {
 	}
 	
 	public function index() {
+
 		$this->init();
 		if ($_GET ['uid']) {
 			
@@ -455,6 +455,7 @@ class IndexAction extends Action {
 			echo '请使用微信访问!';
 		}
 	}
+
 	
 	public function get_day_buy()
 	{
@@ -772,7 +773,7 @@ class IndexAction extends Action {
 		$phone = $_POST ['userData'] [1] [value];
 		//$pay = $_POST ['userData'] [2] [value];
 		$agent = $_SERVER['HTTP_USER_AGENT']; 
-		if(strpos($agent,"icroMessenger")) {
+		if(is_weixin()) {
 			$pay=2;
 		}
 		else
@@ -972,7 +973,7 @@ class IndexAction extends Action {
 		$orderid = $_GET['orderid'];
 		
 		$agent = $_SERVER['HTTP_USER_AGENT']; 
-		if(!strpos($agent,"icroMessenger")) {
+		if(!is_weixin()) {
 			$alipay = M ( "Alipay" )->find ();
 			$url = 'http://' . $_SERVER ['SERVER_NAME'] . __ROOT__ . '/api/wapalipay/alipayapi.php?WIDseller_email=' . $alipay ['alipayname'] . '&WIDout_trade_no=' . $orderid . '&WIDsubject=' . $orderid . '&WIDtotal_fee=' . $totalprice;
 		

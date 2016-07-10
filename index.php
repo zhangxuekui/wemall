@@ -13,7 +13,6 @@ if (ini_get('magic_quotes_gpc')) {
 	$_GET = stripslashesRecursive($_GET);
 	$_POST = stripslashesRecursive($_POST);
 }
-
 define ( 'APP_NAME', 'Application' );
 
 define( 'APP_SITE', getcwd());

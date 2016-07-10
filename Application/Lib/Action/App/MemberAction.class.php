@@ -481,11 +481,22 @@ class MemberAction extends Action {
     //获取永久的微信二维码
     public function wechatqrcode() {
         $this->init('wechatqrcode');
+        $uid = $_SESSION['uid'];
         $usersresult = R ( "Api/Api/getuser", array (
                 $uid 
 			) );
-        $qrcode = D("Member")->add_member($usersresult['id']);
-        echo json_encode($qrcode);
+        $url = $usersresult['url'];
+        if(!$usersresult['url']) {
+            $qrcode = D("Member")->add_member($usersresult['id']);
+            $qrcode = json_decode($qrcode,true);
+            $url = $qrcode['url'];
+        }
+        include APP_PATH."phpqrcode/qrlib.php";
+        $my_qrcode = '/Public/QRcode/Myqrcode/'.md5($url).'.png';
+        if(!file_exists($my_qrcode)) {
+            QRcode::png($url, APP_SITE.$my_qrcode, 'H',10, 10);
+        }
+        echo '<img src="'.$my_qrcode.'" width="80%" style="margin:auto"/>';
+
     }
-	
 }

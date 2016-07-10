@@ -21,7 +21,7 @@ class WechatAction extends Action {
 	public function index() {
 		$weObj = $this->init ();
 		$weObj->valid ();
-		$type = $weObj->getRev ()->getRevType ();				
+		$type = $weObj->getRev ()->getRevType ();
 		include dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/Public/Conf/button_config.php'; 
 		switch ($type) {
 			case Wechat::MSGTYPE_TEXT :
@@ -296,7 +296,17 @@ class WechatAction extends Action {
 		include dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/Public/Conf/button_config.php'; 
 
 		$weObj = $this->init ();
-		$weObj->createMenu ( $newmenu );
-		$this->success ( "重新创建菜单成功!" );
+		if($weObj->createMenu ( $newmenu )){
+            $this->success ( "重新创建菜单成功!" );    
+        } else {
+            $this->success ( "重新创建菜单失败!" );
+        }
 	}
+
+    public function getMenu() {
+        $weObj = $this->init ();
+        $menu = $weObj->getMenu();
+
+        print_r ($menu);
+    }
 }

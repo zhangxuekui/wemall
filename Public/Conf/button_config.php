@@ -1,54 +1,46 @@
 <?php
-$buy_button = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.'g=App&m=Index&a=index_info&refresh=1';
+$buy_button = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.'g=App&m=Index&a=index&refresh=1';
 $jiazu_button = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.'g=App&m=Index&a=member&refresh=1';
+$qrcode_url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.'g=App&m=Member&a=wechatqrcode&refresh=1';
+//QRcode::png($goodsresult['couponslink'], APP_SITE.$coupons_qrcode, 'L',4, 10);
 $newmenu = '{
 		 "button":[
 			{	
 			  "type":"view",
-			  "name":"立即购买",
+			  "name":"商城首页",
 			  "url":"'.$buy_button.'"
 			},
 			{
-				"name":"我的家族",
-				
-				"sub_button":[
-				{	
-				   "name":"我的免费电话",
-				   "type":"view",
-					"url":"http://3g.51wdh.cn/interface/signin/signin.jsp?agentid=8598289"
-				},
-				{
-				   "type":"click",
-				   "name":"活动中心",
-				   "key":"GET_PIC"
-				},
-				{
-				   "name":"我的家族中心",
-				"type":"view",
-				"url":"'.$jiazu_button.'"
-				}]
-				
-				
-				
-		   },
-		   {
-			   "name":"我的助手",
-			   
+			   "name":"活动信息",
 			    "sub_button":[
 			    	{	
-				   "name":"新手指南",
+				   "name":"热卖专区",
 				   "type":"view",
 					"url":"http://www.baidu.com/"
 				},
 				{	
-				   "name":"常见问题",
+				   "name":"限时抢购",
 				   "type":"click",
 					"key":"GET_INFO"
 				},
 				{
-				   "type":"click",
-				   "name":"售后客服",
-				   "key":"售后客服"
+                   "type": "view",
+				   "name":"免单专区",
+                   "url":"http://www.quyougou.cn/"
+				}]
+		   },
+            {
+			   "name":"我的服务",
+			    "sub_button":[
+			    	{	
+				   "name":"个人中心",
+				   "type":"view",
+					"url":"http://www.baidu.com/"
+				},
+				{	
+				   "name":"我的二维码",
+				   "type":"view",
+					"url":"'.$qrcode_url.'"
 				}]
 		   }]
 		}';		
