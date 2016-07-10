@@ -21,6 +21,7 @@ class MemberAction extends Action {
                 'paysignkey' => $config ["paysignkey"]  // 商户签名密钥Key
             );
             $weObj = new Wechat ($options);
+            var_dump($weObj);exit;
             $info = $weObj->getOauthAccessToken();
             var_dump($info);
             if (!$info) {
