@@ -21,9 +21,11 @@ class MemberAction extends Action {
                 'paysignkey' => $config ["paysignkey"]  // 商户签名密钥Key
             );
             $weObj = new Wechat ($options);
-            var_dump($weObj);exit;
-            $info = $weObj->getOauthAccessToken();
-            var_dump($info);
+            echo 2222222222222;exit;
+			if(isset($_GET['code'])) {
+                $info = $weObj->getOauthAccessToken();
+                echo 5555555555555;exit;
+            }
             if (!$info) {
                 $callback = 'http://' . $_SERVER ['SERVER_NAME'] . U("App/Index/$type", $_GET);
                 $url = $weObj->getOauthRedirect($callback, '', 'snsapi_base');
@@ -479,7 +481,7 @@ class MemberAction extends Action {
     //获取永久的微信二维码
     public function wechatqrcode() {
         $this->init('wechatqrcode');
-        $qrcode = D("Member")->add_member();
+        $qrcode = D("Member")->add_member(1);
         echo json_encode($qrcode);
     }
 	
