@@ -476,7 +476,8 @@ class MemberAction extends Action {
 
     //获取永久的微信二维码
     public function wechatqrcode() {
-        echo json_encode(D("Member")->add_member(1));
+        $qrcode = D("Member")->add_member(1);
+        echo json_encode($qrcode);
     }
 	
 }
