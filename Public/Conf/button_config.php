@@ -2,6 +2,8 @@
 $buy_button = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.'g=App&m=Index&a=index&refresh=1';
 $jiazu_button = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.'g=App&m=Index&a=member&refresh=1';
 $qrcode_url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.'g=App&m=Member&a=wechatqrcode&refresh=1';
+$freeorder = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?g=App&m=Goods&a=freeorder';
+$hotsell = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'index.php?g=App&m=Goods&a=hot';
 //QRcode::png($goodsresult['couponslink'], APP_SITE.$coupons_qrcode, 'L',4, 10);
 $newmenu = '{
 		 "button":[
@@ -16,7 +18,7 @@ $newmenu = '{
 			    	{	
 				   "name":"热卖专区",
 				   "type":"view",
-					"url":"http://www.baidu.com/"
+					"url":"'.$hotsell.'"
 				},
 				{	
 				   "name":"限时抢购",
@@ -26,7 +28,7 @@ $newmenu = '{
 				{
                    "type": "view",
 				   "name":"免单专区",
-                   "url":"http://www.quyougou.cn/"
+                   "url":"'.$freeorder.'"
 				}]
 		   },
             {
