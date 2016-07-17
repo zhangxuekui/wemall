@@ -16,6 +16,22 @@
                 {$goods.detail}
             </div>
             <div class="qrs clearfix" id="qrcode">
+                <notempty name="couponslink">
+                    <div class="w50 pull-left">
+                        <div class="qr">
+                            <a href="{$goods.couponslink}" class="baseColor text-center center-block">领取优惠券</a>
+                        </div>
+                    </div>
+                </notempty>
+                <notempty name="weblink">
+                    <div class="w50 pull-right">
+                        <div class="qr">
+                            <a href="{$goods.weblink}" class="baseColor center-block text-center">产品二维码</a>
+                        </div>
+                    </div>
+                </notempty>
+            </div>
+            <div class="qrs clearfix" id="qrcode">
                 <empty name="coupons_qrcode">
                     <div class="w50 pull-left" style="width:100%">
                         <div class="qr">

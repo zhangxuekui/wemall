@@ -263,20 +263,21 @@ class WechatAction extends Action {
 							{
 								$user_id = $result['id'];
 							}
-							
-							$text = '恭喜您由【'.$user_info['nickname'].'】推荐成为'.$message_name.'的第【'.$user_id.'】位会员.购买马上成为'.$message_name.'的族长，2015年'.$message_name.'引领你开启“赚钱新模式”，带你一起赚钱一起飞！
+                            $text = "恭喜您由【".$user_info['nickname']."】推荐成为趣优购的第【".$user_id."】位会员，趣优购致力于分享优质商家内部促销，甚至亏本冲销量活动！\n
+如果您暂时还不会淘宝购物请点击这里！\n
+如果您已经是购物达人请点击商城首页进行愉快的买买买吧~";
 
-如果您是新手请<a href="http://www.hao123.com">点击这里</a>快速学习如何赚钱！
+                        //如果您是新手请<a href="http://www.hao123.com">点击这里</a>快速学习如何赚钱！
 
-如果已经知道怎么玩，请直接<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx574e1b7032516d6d&redirect_uri=http%3A%2F%2Flongna.gotejia.com%2Findex.php%3Fg%3DApp%26m%3DIndex%26a%3Dindex_info%26refresh%3D1&response_type=code&scope=snsapi_base&state=#wechat_redirect">点击购买</a>成为族长，开启睡觉赚钱新模式哦！';
+                        //如果已经知道怎么玩，请直接<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx574e1b7032516d6d&redirect_uri=http%3A%2F%2Flongna.gotejia.com%2Findex.php%3Fg%3DApp%26m%3DIndex%26a%3Dindex_info%26refresh%3D1&response_type=code&scope=snsapi_base&state=#wechat_redirect">点击购买</a>成为族长，开启睡觉赚钱新模式哦！';
 						}
 						else
 						{
-							$text = '欢迎您【'.$wx_info['nickname'].'】关注'.$message_name.'，2015年'.$message_name.'引领你开启“赚钱新模式”，带你一起赚钱一起飞！
+							$text = '欢迎您【'.$wx_info['nickname'].'】关注'.$message_name.'，2016年'.$message_name.'引领你开启“赚钱新模式”，带你一起赚钱一起飞！';
 
-如果您是新手请<a href="http://www.baidu.com">点击这里</a>快速学习如何赚钱！
+                            //如果您是新手请<a href="http://www.baidu.com">点击这里</a>快速学习如何赚钱！
 
-如果已经知道怎么玩，请直接<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx574e1b7032516d6d&redirect_uri=http%3A%2F%2Flongna.gotejia.com%2Findex.php%3Fg%3DApp%26m%3DIndex%26a%3Dindex_info%26refresh%3D1&response_type=code&scope=snsapi_base&state=#wechat_redirect">点击购买</a>成为族长，开启睡觉赚钱新模式哦！';
+                            //如果已经知道怎么玩，请直接<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx574e1b7032516d6d&redirect_uri=http%3A%2F%2Flongna.gotejia.com%2Findex.php%3Fg%3DApp%26m%3DIndex%26a%3Dindex_info%26refresh%3D1&response_type=code&scope=snsapi_base&state=#wechat_redirect">点击购买</a>成为族长，开启睡觉赚钱新模式哦！';
 						}
 					}
 					

@@ -501,6 +501,7 @@ class MemberAction extends Action {
         if(!file_exists($my_qrcode)) {
             QRcode::png($url, APP_SITE.$my_qrcode, 'H',10, 10);
         }
+        $my_qrcode = 'http://www.quyougou.cn/Public/QRcode/Myqrcode/73e5853d8d0fa1cfa7009631b8cb3871.png';
         $this->assign('my_qrcode',$my_qrcode);
         $this->display ();
     }

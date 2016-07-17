@@ -1,0 +1,72 @@
+<include file="Public:header"/>
+<!-- =========================================== mycode =====================================- -->
+<div class="container-fluid">
+    <div class="now clearfix center-block maxw">
+        <div class="col-xs-6">
+            <h3 style="font-size:18px;color: #999;">下单即免</h3>
+        </div>
+    </div>
+    <div class="row clearfix center-block maxw">
+        <volist name="data.goods" id="goodsvo">
+            <div class="col-xs-6">
+                <a href="{:U('App/Goods/goodsdetails','goods_id='.$goodsvo['id'])}">
+                    <img src="__PUBLIC__/Uploads/{$goodsvo.image}"  class="img-responsive center-block" alt="{$goodsvo.name}" />
+                </a>
+                <a href="{:U('App/Goods/goodsdetails','goods_id='.$goodsvo['id'])}">
+                    <label>{$goodsvo.name}</label>
+                </a>
+                <div class="center-block clearfix maxw">
+                    <p class="navbar-text navbar-left">$19.99 </p>
+                    <a class="navbar-text pull-right">券后价：<color style="color:red">￥19.99</color></a>
+                </div>
+                <a class="pull-right btn btn-danger clearfix" href="{:U('App/Goods/goodsdetails','goods_id='.$goodsvo['id'])}">购买</a>
+            </div>
+        </volist>
+    </div>
+    <div class="now clearfix center-block" style="display:none">
+        <div class="col-xs-6">
+            <h3 style="font-size:18px;color: #999;">领券免单</h3>
+        </div>
+    </div>
+    <div class="row clearfix center-block" style="display:none">
+        <volist name="data.goods" id="goodsvo">
+            <div class="col-xs-4">
+                <a href="{:U('App/Goods/goodsdetails','goods_id='.$goodsvo['id'])}">
+                    <img src="__PUBLIC__/Uploads/{$goodsvo.image}"  class="img-responsive center-block" alt="{$goodsvo.name}" />
+                </a>
+            </div>
+            <div class="col-xs-6">
+                <a href="{:U('App/Goods/goodsdetails','goods_id='.$goodsvo['id'])}">
+                    <label>{$goodsvo.name}</label>
+                </a>
+                <div class="center-block">
+                    <label class="navbar-text navbar-right">原价 $19.99</label> <label class="navbar-link pull-right">券后价 <color style="color:red">￥19.99</color></label>
+                </div>
+                <a class="pull-right btn btn-danger" href="{:U('App/Goods/goodsdetails','goods_id='.$goodsvo['id'])}">购买</a>
+            </div>
+        </volist>
+    </div>
+    <include file="Public:footermenu"/>
+
+    <!-- ============================================ end =======================================- -->
+
+
+    <!--[if (gte IE 9)|!(IE)]>
+        <!-->
+    <!--<![endif]-->
+    <!--[if lte IE 8 ]>
+        <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+        <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+        <script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+        <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+    <![endif]-->
+    <script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.offcanvas.min.js"></script>
+    <script src="__PUBLIC__/js/jquery.cookie.js"></script>
+    <script>
+
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,57 @@
+<include file="Public:header"/>
+<!-- =========================================== mycode =====================================- -->
+
+<div class="container-fluid">
+    <div class="row clearfix center-block maxw hot">
+        <div class="row shangpinliebiao1">
+            <volist name="data.goods" id="goodsvo">
+                <div class="col-xs-6">
+                    <div class="shangpinjianjie">
+                        <div class="jianjieimg">
+                            <a href="{:U('App/Goods/goodsdetails','goods_id='.$goodsvo['id'])}">
+                                <img src="__PUBLIC__/Uploads/{$goodsvo.image}" class="center-block" alt="">
+                            </a>
+                        </div>
+                        <div class="jianjieinfo">
+                            <a href="{:U('App/Goods/goodsdetails','goods_id='.$goodsvo['id'])}"><h3>
+                                {$goodsvo.name}</h3></a>
+                            <p>
+                                <span class="jianjieleixin">{$goodsvo.price}</span>
+                                <span class="pull-right jianjieprice">券后价：<span class="small">¥</span>{$goodsvo.price}</span>
+                            </p>
+                        </div>
+                        <div class="buylink">
+                            <a href="/index.php?g=App&amp;m=Goods&amp;a=goodsdetails&amp;goods_id={$goodsvo.goods_id}" class="btnlong">购买</a>
+                        </div>
+                    </div>
+                </div>
+            </volist>
+        </div>
+        {$page}
+        <include file="Public:footermenu"/>
+    </div>
+</div>
+</div>
+
+<!-- ============================================ end =======================================- -->
+
+
+<!--[if (gte IE 9)|!(IE)]>
+    <!-->
+<!--<![endif]-->
+<!--[if lte IE 8 ]>
+    <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+    <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+<script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
+<script src="__PUBLIC__/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/js/bootstrap.offcanvas.min.js"></script>
+<script src="__PUBLIC__/js/jquery.cookie.js"></script>
+<script>
+
+</script>
+</body>
+</html>
+

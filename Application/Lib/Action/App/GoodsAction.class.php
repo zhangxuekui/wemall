@@ -49,7 +49,7 @@ class GoodsAction extends Action
 
     function goodsdetails()
     {
-        $this->init();
+        //$this->init();
         $info = R("Api/Api/gettheme");
         C("DEFAULT_THEME", $info ["theme"]);
         $goods_id = $this->_param('goods_id');
@@ -107,6 +107,8 @@ class GoodsAction extends Action
             $data['action_name'] = ACTION_NAME;
             $this->assign('qrcode',$goods_qrcode);
             $this->assign('data',$data);
+            $this->assign ( "weblink", $goodsresult['weblink'] );
+            $this->assign ( "couponslink", $goodsresult['couponslink'] );
             $this->assign("goods", $goodsresult);
             $this->display();
         } else {
@@ -115,7 +117,7 @@ class GoodsAction extends Action
     }
 
     function cate() {
-        $this->init();
+        //$this->init();
         $info = R("Api/Api/gettheme");
         C("DEFAULT_THEME", $info ["theme"]);
 
@@ -155,7 +157,7 @@ class GoodsAction extends Action
 
 
     function active() {
-        $this->init();
+        //$this->init();
         $info = R("Api/Api/gettheme");
         C("DEFAULT_THEME", $info ["theme"]);
         $limit = 8;
@@ -191,8 +193,8 @@ class GoodsAction extends Action
     //hot热卖专区
 
     function hot() {
-        $this->init();
-		if ($_GET ['uid']) {
+        //$this->init();
+		if ($_GET ['uid'] || 1==1) {
 			
 			$info = R ( "Api/Api/gettheme" );
 			C ( "DEFAULT_THEME", $info ["theme"] );
@@ -228,5 +230,38 @@ class GoodsAction extends Action
             $this->assign ( "data", $data );
 			$this->display ();
         }
+    }
+
+    function freeorder() {
+        $info = R("Api/Api/gettheme");
+        C("DEFAULT_THEME",$info['theme']);
+        $this->assign("info",$info);
+
+        $limit = 8;
+        $p = (int)$this->_get('p') ? $this->_get('p') : 1;
+
+        $where['recommend'] = 5;
+
+        //获取商品列表
+
+        $data['goods'] = M('good')->where($where)->order('sort desc')->limit(($p-1)*$limit,$limit)->select();
+
+        import('ORG.Util.Page');// 导入分页类
+        $data['goods_count'] = M('good')->where($where)->count();
+
+        $page_class = new Page($data['goods_count'],1);// 实例化分页类 传入总记录数和每页显示的记录数
+        $show = $page_class->show();// 分页显示输出
+
+        
+
+        $this->assign('page',$show);// 赋值分页输出
+        
+        $data['action_name'] = ACTION_NAME;
+            
+        include dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/Public/Conf/button_config.php'; 
+        $this->assign ( "config_good_pic", $config_good_pic );
+        $this->assign ( "data", $data );
+        
+        $this->display();
     }
 }

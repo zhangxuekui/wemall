@@ -388,7 +388,8 @@ class IndexAction extends Action {
 	
 	public function index() {
 
-		$this->init();
+		//$this->init();
+        $_GET['uid'] = 1;
 		if ($_GET ['uid']) {
 			
 			$info = R ( "Api/Api/gettheme" );
